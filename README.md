@@ -1,27 +1,23 @@
-# ProyectoAngular
+# Proyecto Angular Coderhouse
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.1.
+Trabajo practico del curso de Angular de Coderhouse
 
-## Development server
+## Formularios reactivos
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Se realizo un formulario con ReactiveForm para la carga de alumnos, a los cuales se les aplico validaciones sobre campo requerido.
 
-## Code scaffolding
+## Angular Material
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Se decoro el layout utilizando componentes de Angular Material
 
-## Build
+- Tablas
+- Formulario
+- Toolbar
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Base de datos
 
-## Running unit tests
+Se utilizo Json Server para levantar un pequeño backend que se alimenta de un archivo db.json ubicado en src/app/db/
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+---
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Se siguieron las recomendaciones del tutor de implementar en las entregas todo lo aprendido para ir dando forma al trabajo final, pudiendo observarse varios componentes sin uso para posibles usos futuros.
