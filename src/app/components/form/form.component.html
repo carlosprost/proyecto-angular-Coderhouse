@@ -1,0 +1,51 @@
+<section class="formStyle">
+  <form class="formulario" [formGroup]="formStudent" (submit)="onSubmit()">
+    <mat-form-field>
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="firstName" />
+      <mat-hint>Escriba los nombres del alumno</mat-hint>
+      <mat-error *ngIf="formStudent.controls['firstName'].hasError('required')">
+        Este campo es <strong>requerido</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Apellido</mat-label>
+      <input matInput formControlName="lastName" />
+      <mat-hint>Escriba los apellidos del alumno</mat-hint>
+      <mat-error *ngIf="formStudent.controls['lastName'].hasError('required')">
+        Este campo es <strong>requerido</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Edad</mat-label>
+      <input matInput formControlName="age" />
+      <mat-hint>Escriba la edad del alumno</mat-hint>
+      <mat-error *ngIf="formStudent.controls['age'].hasError('required')">
+        Este campo es <strong>requerido</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Estado</mat-label>
+      <mat-select formControlName="status">
+        <mat-option [value]="true">Activo</mat-option>
+        <mat-option [value]="false">Inactivo</mat-option>
+      </mat-select>
+      <mat-hint>Seleccione el estado del alumno</mat-hint>
+      <mat-error *ngIf="formStudent.controls['status'].hasError('required')">
+        Este campo es <strong>requerido</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      color="accent"
+      type="submit"
+      [disabled]="formStudent.invalid"
+    >
+      Nuevo Estudiante
+    </button>
+  </form>
+</section>

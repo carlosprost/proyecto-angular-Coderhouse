@@ -1,0 +1,24 @@
+.menu {
+  width: 97%;
+  height: 99%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .btns {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+    button{
+        width: 100%;
+        font-size: 1.2rem;
+        color: white;
+        margin: 0.5rem 0;
+        display: flex;
+        justify-content: flex-start;
+    }
+  }
+}

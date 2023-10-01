@@ -1,0 +1,46 @@
+{
+  "students": [
+    {
+      "id": 1,
+      "firstName": "Sebastian Cesar",
+      "lastName": "Gonzalez",
+      "age": "23",
+      "status": true
+    },
+    {
+      "id": 2,
+      "firstName": "Juan",
+      "lastName": "Perez",
+      "age": "23",
+      "status": false
+    },
+    {
+      "id": 3,
+      "firstName": "Pedro",
+      "lastName": "Gonzalez",
+      "age": "23",
+      "status": true
+    },
+    {
+      "firstName": "Carlos Alberto",
+      "lastName": "Prost",
+      "age": "35",
+      "status": true,
+      "id": 4
+    },
+    {
+      "firstName": "Gabriel Alejandro",
+      "lastName": "Prost",
+      "age": "35",
+      "status": false,
+      "id": 5
+    },
+    {
+      "firstName": "Maria Eugenia",
+      "lastName": "Prost",
+      "age": "5",
+      "status": false,
+      "id": 6
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+.student {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  .tableStudent {
+    width: 70%;
+    height: 100%;
+  }
+
+  .formStudent {
+    width: 30%;
+    height: 100%;
+  }
+}

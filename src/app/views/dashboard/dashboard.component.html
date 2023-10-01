@@ -1,0 +1,10 @@
+<section class="dashboard">
+  <section class="sidebar">
+    <app-sidebar (students)="openStudents($event)" (teachers)="openTeachers($event)" (courses)="openCourses($event)"></app-sidebar>
+  </section>
+  <section class="main">
+    <app-students *ngIf="students"></app-students>
+    <app-teachers *ngIf="teachers"></app-teachers>
+    <app-courses *ngIf="courses"></app-courses>
+  </section>
+</section>
