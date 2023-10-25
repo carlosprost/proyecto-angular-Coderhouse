@@ -2,6 +2,10 @@
 
 Trabajo practico del curso de Angular de Coderhouse
 
+## Funcionamiento del proyecto
+
+El proyecto de inicializa con el camando "npm start", el cual tiene desarrollado un script que inicializa el servidor Json-server junto con el ng serve.
+
 ## Formularios reactivos
 
 Se realizo un formulario con ReactiveForm para la carga de alumnos, a los cuales se les aplico validaciones sobre campo requerido.
@@ -13,6 +17,8 @@ Se decoro el layout utilizando componentes de Angular Material
 - Tablas
 - Formulario
 - Toolbar
+- Dialog
+- DrawerMenu
 
 ## Base de datos
 
