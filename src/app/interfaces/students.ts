@@ -1,14 +1,12 @@
-export interface Student {
+import { Person } from "./person";
+
+export interface Student extends Person {
     id: number;
-    firstName: string;
-    lastName: string;
     age: string;
     status: boolean;
 }
 
-export interface StudentCreated {
-    firstName: string;
-    lastName: string;
+export interface StudentCreated extends Person {
     age: string;
     status: boolean;
 }

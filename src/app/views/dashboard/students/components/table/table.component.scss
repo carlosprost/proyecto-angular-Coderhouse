@@ -8,5 +8,16 @@
     padding: 7px;
     table{
         width: 100%;
+        th{
+            width: 300px;
+            padding: 5px;
+            text-align: center;
+        }
+
+        td{
+            width: 300px;
+            padding: 5px;
+            text-align: center;
+        }
     }
 }

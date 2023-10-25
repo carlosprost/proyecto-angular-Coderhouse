@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatDrawer } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-toolbar',
@@ -7,4 +8,7 @@ import { Component, Input } from '@angular/core';
 })
 export class ToolbarComponent {
   @Input() title: string = '';
+  @Input() drawer?: MatDrawer;
+
+
 }

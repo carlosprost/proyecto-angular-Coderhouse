@@ -1,10 +1,13 @@
 <section class="dashboard">
-  <section class="sidebar">
-    <app-sidebar (students)="openStudents($event)" (teachers)="openTeachers($event)" (courses)="openCourses($event)"></app-sidebar>
-  </section>
-  <section class="main">
-    <app-students *ngIf="students"></app-students>
-    <app-teachers *ngIf="teachers"></app-teachers>
-    <app-courses *ngIf="courses"></app-courses>
-  </section>
+  <app-toolbar [title]="title" [drawer]="drawer"></app-toolbar>
+<mat-drawer-container class="drawer-container" autosize>
+  <mat-drawer #drawer class="drawer-sidenav" mode="side">
+    <app-sidebar></app-sidebar>
+  </mat-drawer>
+
+  <div class="drawer-sidenav-content">
+    <router-outlet></router-outlet>
+  </div>
+
+</mat-drawer-container>
 </section>

@@ -1,8 +1,23 @@
 <section class="student">
+    <section class="reloj">
+        <!-- Muestra en mantalla del observable Reloj -->
+        <div style="font-size: 25px; color: red;">{{clock}}</div>
+    </section>
+    <section class="buttonActions">
+        <button mat-button color="primary" (click)="openDialog()">Nuevo Estudiante</button>
+    </section>
     <section class="tableStudent">
-        <app-table [data]="students" [columnTable]="columnTable"></app-table>
+        <section class="searchStudents">
+            <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Buscar estudiante</mat-label>
+                <input matInput (keyup)="searchStudent($event)">
+            </mat-form-field>
+        </section>
+        <app-table
+            [data]="(students$ | async) || []"
+            (deleteElement)="deleteStudent($event)"
+            (editElement)="openDialogEdit($event)"
+            ></app-table>
     </section>
-    <section class="formStudent">
-        <app-form (studentCreated)="newStudent($event)"></app-form>
-    </section>
+    
 </section>
