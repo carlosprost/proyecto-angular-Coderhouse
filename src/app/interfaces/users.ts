@@ -1,12 +1,7 @@
 export interface User {
-    id: number;
+    id?: number | null;
     name: string;
     email: string;
     password: string;
 }
 
-export interface UserCreated {
-    name: string;
-    email: string;
-    password: string;
-}

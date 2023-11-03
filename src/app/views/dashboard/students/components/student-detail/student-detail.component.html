@@ -1,0 +1,24 @@
+
+<section class="student-detail">
+    <section class="details">
+        <h3>Datos del estudiante</h3>
+    <app-student-detail-table [studentDetail]="(studentSource$ | async) || []"></app-student-detail-table>
+    <h3>Cursos del estudiante</h3>
+    
+    <app-student-course-table [course]="(courses$ | async) || []" [studentCourses]="(enroll$ | async) || []"></app-student-course-table>
+    </section>
+    <section class="form-details">
+        <form [formGroup]="studentEnrollment">
+            <mat-form-field>
+                <mat-label>Curso</mat-label>
+                <mat-select formControlName="course_id">
+                    <mat-option *ngFor="let course of courses$ | async" [value]="course">{{course.name}} - {{course.date}} - {{course.hour}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div>
+                <button mat-raised-button color="primary" (click)="onSubmit()">Action</button>
+            </div>
+        </form>
+        
+    </section>
+</section>

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Student, StudentCreated } from '../interfaces/students';
+import { Student } from '../interfaces/students';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
@@ -30,7 +30,7 @@ export class StudentsService {
     return this.http.get<Student>(`${this.URL}/${id}`)
   }
 
-  createStudent(student: StudentCreated) {
+  createStudent(student: Student) {
     return this.http.post(this.URL, student)
   }
 
@@ -38,7 +38,8 @@ export class StudentsService {
     return this.http.delete(`${this.URL}/${id}`)
   }
 
-  updateStudent(id: number, student: StudentCreated) {
+  updateStudent(id: number, student: Student) {
     return this.http.put(`${this.URL}/${id}`, student)
   }
 }
+ 

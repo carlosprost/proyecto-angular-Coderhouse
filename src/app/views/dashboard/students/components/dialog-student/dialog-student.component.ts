@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import { DataDialog } from 'src/app/interfaces/data-dialog';
-import { Student, StudentCreated } from 'src/app/interfaces/students';
+import { Student } from 'src/app/interfaces/students';
 
 @Component({
   selector: 'app-dialog-student',
@@ -19,7 +19,8 @@ export class DialogStudentComponent {
     public dialogRef: MatDialogRef<DialogStudentComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DataDialog,
     ) {
-    this.createFormStudent(data.student)
+      
+    this.createFormStudent(data.data)
    }
 
    dialogClose(){
@@ -36,14 +37,14 @@ export class DialogStudentComponent {
    }
 
    onSubmit() {
-    let obj: StudentCreated = {
+    let obj: Student = {
       firstName: this.formStudent.value.firstName,
       lastName: this.formStudent.value.lastName,
       age: this.formStudent.value.age,
       status: this.formStudent.value.status
     }
     
-    this.dialogRef.close({id: this.data.student.id,data: obj})
+    this.dialogRef.close({id: this.data.data.id,data: obj})
     
    }
 

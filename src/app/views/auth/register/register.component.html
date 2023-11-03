@@ -1,0 +1,64 @@
+<section class="register">
+
+    <section class="formRegister">
+        <h2>Registro</h2>
+        <form [formGroup]="formRegister">
+            <!-- Nombre -->
+            <mat-form-field>
+                <mat-label>
+                    <mat-icon>person</mat-icon>
+                    <span>Nombre</span>
+                </mat-label>
+                <input matInput placeholder="Nombre" formControlName="name" required>
+            </mat-form-field>
+
+            <!-- Apellido -->
+            <mat-form-field>
+                <mat-label>
+                    <mat-icon>person</mat-icon>
+                    <span>Apellido</span>
+                </mat-label>
+                <input matInput placeholder="Apellido" formControlName="lastName" required>
+            </mat-form-field>
+
+            <!-- Email -->
+            <mat-form-field>
+                <mat-label>
+                    <mat-icon>mail</mat-icon>
+                    <span>Email</span>
+                </mat-label>
+                <input matInput placeholder="Email"  formControlName="email" required>
+            </mat-form-field>
+
+            <!-- Contraseña -->
+            <mat-form-field>
+                <mat-label>
+                    <mat-icon>password</mat-icon>
+                    <span>Contraseña</span>
+                </mat-label>
+                <input matInput type="password" formControlName="password" required>
+            </mat-form-field>
+
+            <!-- Confirma Contraseña -->
+            <mat-form-field>
+                <mat-label>
+                    <mat-icon>password</mat-icon>
+                    <span>Confirmación de Contraseña</span>
+                </mat-label>
+                <input matInput type="password" formControlName="confirmPassword" required>
+
+                <mat-error *ngIf="formRegister.controls['confirmPassword'].hasError('confirmPassword')">
+                    No coinciden las contraseñas
+                </mat-error>
+            </mat-form-field>
+            <div class="btn">
+                <button mat-raised-button color="secondary" (click)="onCancel()">Cancelar</button>
+                <button mat-raised-button color="primary" (click)="register()">Registrarse</button>
+            </div>
+        </form>
+
+    </section>
+
+
+
+</section>

@@ -1,10 +1,10 @@
+import { Teacher } from "./teachers";
+
 export interface Course {
-    id: number;
+    id?: number;
     name: string;
-    teacherId: number;
+    date?: string;
+    hour?: string;
+    teacher_id?: number;
 }
 
-export interface CourseCreated {
-    name: string;
-    teacherId: number;
-}

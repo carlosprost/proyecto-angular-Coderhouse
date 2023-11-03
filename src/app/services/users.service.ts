@@ -1,14 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User, UserCreated } from '../interfaces/users';
+import { User } from '../interfaces/users';
 import { map } from 'rxjs';
+import { Session } from '../interfaces/session';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
 
-  URL: string = 'http://localhost:3000/teachers'
+  URL: string = 'http://localhost:3000/users'
+  URLSession: string = 'http://localhost:3000/session'
   constructor(private http: HttpClient) { }
 
   getUsers() {
@@ -20,10 +22,21 @@ export class UsersService {
   }
 
   login(userLogin: User) {
-    return this.getUser(userLogin.id).pipe(map((user: User) => user.password === userLogin.password));
+    return this.http.get<User[]>(`${this.URL}`).pipe(
+      map(users => {
+        console.log(users);
+        
+       return users.filter(user => user.email === userLogin.email && user.password === userLogin.password)
+      })
+    )
+    
   }
 
-  createUser(user: UserCreated) {
+  newSession(session: Session) {
+    return this.http.post(`${this.URLSession}`, session)
+  }
+
+  createUser(user: User) {
     return this.http.post(this.URL, user)
   }
 
@@ -31,7 +44,7 @@ export class UsersService {
     return this.http.delete(`${this.URL}/${id}`)
   }
 
-  updateUser(id: number, user: UserCreated) {
+  updateUser(id: number, user: User) {
     return this.http.put(`${this.URL}/${id}`, user)
   }
 }

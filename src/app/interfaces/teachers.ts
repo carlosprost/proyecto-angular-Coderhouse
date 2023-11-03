@@ -1,10 +1,6 @@
 export interface Teacher {
-    id: number;
+    id?: number;
     firstName: string;
     lastName: string;
 }
 
-export interface TeacherCreated {
-    firstName: string;
-    lastName: string;
-}

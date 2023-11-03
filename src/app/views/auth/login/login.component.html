@@ -1,0 +1,51 @@
+<section class="login">
+  <div class="boxLogin">
+    <h2>Login</h2>
+
+    <form [formGroup]="formLogin">
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" />
+        <mat-hint>eg. ejemplo@mail.com</mat-hint>
+        <mat-error *ngIf="formLogin.controls['email'].hasError('required')">
+          Este campo es <strong>requerido</strong>
+        </mat-error>
+        <mat-error *ngIf="formLogin.controls['email'].hasError('email')">
+          Este campo debe ser un <strong>email</strong> valido
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input
+          [type]="passVisibility ? 'text' : 'password'"
+          matInput
+          formControlName="password"
+        />
+        <mat-icon (click)="passVisibility = !passVisibility" matSuffix>
+          {{ passVisibility ? "visibility_off" : "visibility" }}
+        </mat-icon>
+        <mat-hint></mat-hint>
+        <mat-error *ngIf="formLogin.controls['password'].hasError('required')">
+          Este campo es <strong>requerido</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <div>
+        <button mat-raised-button color="primary" (click)="onSubmit()">
+          Sing In
+        </button>
+      </div>
+    </form>
+    <div class="registro">
+      <a mat-button routerLink="../register">Registrarse.</a>
+    </div>
+    <div class="forgoten">
+      
+      <a mat-button routerLink="../forgot-password">Olvidaste tu contraseña?</a>
+    </div>
+      
+  </div>
+
+  
+</section>

@@ -1,38 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from './views/dashboard/dashboard.component';
-import { StudentsComponent } from './views/dashboard/students/students.component';
-import { TeachersComponent } from './views/dashboard/teachers/teachers.component';
-import { CoursesComponent } from './views/dashboard/courses/courses.component';
-import { LoginComponent } from './views/login/login.component';
+import { AuthComponent } from './views/auth/auth.component';
+import { LoginComponent } from './views/auth/login/login.component';
+import { RegisterComponent } from './views/auth/register/register.component';
+import { ForgotenComponent } from './views/auth/forgoten/forgoten.component';
 
 const routes: Routes = [
     {
         path: 'login',
-        component: LoginComponent
+        loadChildren: () => import('./views/auth/auth.module').then(m => m.AuthModule)
     },
     {
-        path: 'dashboard', 
-        component: DashboardComponent,
-        children:[
-            {
-                path: 'students',
-                component: StudentsComponent
-            },
-            {
-                path: 'teachers',
-                component: TeachersComponent
-            },
-            {
-                path: 'courses',
-                component: CoursesComponent
-            },
-            {
-                path: '**',
-                redirectTo: 'students'
-            }
-        
-        ]
+        path: 'dashboard',
+        loadChildren: () => import('./views/dashboard/dashboard.module').then(m => m.DashboardModule)
     },
     {
         path: '**',

@@ -1,1 +1,19 @@
-<p>courses works!</p>
+<section class="course">
+    <section class="tableCourse">
+        <section class="searchCourse">
+            <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Buscar curso</mat-label>
+                <input matInput (keyup)="searchCourse($event)">
+            </mat-form-field>
+        </section>
+        <section class="buttonActions">
+            <button mat-button color="primary" (click)="openDialog()">Nuevo Curso</button>
+        </section>
+        <app-table-courses
+            [dataSource]="(courses$ | async) || []"
+            (deleteElement)="deleteCourse($event)"
+            (editElement)="openDialogEdit($event)"
+            ></app-table-courses>
+    </section>
+    
+</section>

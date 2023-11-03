@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DataTable } from 'src/app/interfaces/data-table';
 import { Student } from 'src/app/interfaces/students';
 
@@ -39,12 +40,18 @@ export class TableComponent implements OnInit {
   @Output() editElement: EventEmitter<number> = new EventEmitter();
   @Output() deleteElement: EventEmitter<number> = new EventEmitter();
 
+  constructor(private router: Router) {}
+
   ngOnInit(): void {
     this.setColumns()
     
   }
   setColumns() {
     this.columns = this.columnTable.map((column: any) => column.key);
+  }
+
+  studentDetail(id: number) {
+    this.router.navigate(['dashboard', 'students', 'detail', id])
   }
 
 }

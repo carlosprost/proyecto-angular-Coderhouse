@@ -11,30 +11,12 @@ import { map } from 'rxjs/operators';
   templateUrl: './students.component.html',
   styleUrls: ['./students.component.scss'],
 })
-export class StudentsComponent implements OnInit, OnDestroy {
+export class StudentsComponent implements OnInit {
   students$: Observable<Student[]>;
-
-  /* Reloj */
-  clock: string = '';
-  clockSubscription: Subscription;
 
   constructor(private db: StudentsService, public dialog: MatDialog) {
     this.students$ = this.db.getStudents();
 
-    /* Inicialización del Observable getClock */
-    this.clockSubscription = this.getClock().subscribe({
-      next: (time: string) => {
-        console.log(time);
-        this.clock = time;
-      },
-      complete: () => {
-        console.log('Completado');
-      },
-    });
-  }
-  ngOnDestroy(): void {
-    this.clockSubscription.unsubscribe();
-    console.log('Se destruyo el reloj');
   }
 
   ngOnInit(): void {
@@ -109,31 +91,7 @@ export class StudentsComponent implements OnInit, OnDestroy {
     });
   }
 
-  /* Implementación del Observable del RELOJ */
-  getClock(): Observable<string> {
-    return new Observable<string>((observer) => {
-      setInterval(() => {
-        const date = new Date();
-        let hour =
-          date.getHours() < 10 ? `0${date.getHours()}` : `${date.getHours()}`;
-        let minutes =
-          date.getMinutes() < 10
-            ? `0${date.getMinutes()}`
-            : `${date.getMinutes()}`;
-        let seconds =
-          date.getSeconds() < 10
-            ? `0${date.getSeconds()}`
-            : `${date.getSeconds()}`;
-
-        const time = `${hour}:${minutes}:${seconds}`;
-        observer.next(time);
-      }, 1000);
-    });
-  }
-
   searchStudent(dato: any) {
-    console.log(dato?.target?.value);
-    
     this.students$ = this.students$.pipe(
       map((students) =>
         students.filter(

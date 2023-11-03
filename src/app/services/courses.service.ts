@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Course, CourseCreated } from '../interfaces/courses';
+import { Course } from '../interfaces/courses';
+import { of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,15 +10,15 @@ export class CoursesService {
   URL: string = 'http://localhost:3000/courses'
   constructor(private http: HttpClient) { }
 
-  getCourses() {
+  getCourses$() {
     return this.http.get<Course[]>(this.URL)
   }
 
-  getCourse(id: number) {
+  getCourse$(id: number) {
     return this.http.get<Course>(`${this.URL}/${id}`)
   }
 
-  createCourse(course: CourseCreated) {
+  createCourse(course: Course) {
     return this.http.post(this.URL, course)
   }
 
@@ -25,7 +26,7 @@ export class CoursesService {
     return this.http.delete(`${this.URL}/${id}`)
   }
 
-  updateCourse(id: number, course: CourseCreated) {
+  updateCourse(id: number, course: Course) {
     return this.http.put(`${this.URL}/${id}`, course)
   }
 }
