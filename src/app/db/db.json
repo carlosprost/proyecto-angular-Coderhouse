@@ -811,12 +811,92 @@
   ],
   "studentEnrollments": [
     {
-      "student_id": 3,
+      "student_id": 5,
       "course_id": 1,
       "course_name": "Introducción a la Programación",
       "date": "6 de noviembre a 20 de noviembre",
       "hour": "09:00 - 11:00",
       "id": 1
+    },
+    {
+      "student_id": 8,
+      "course_id": 1,
+      "course_name": "Introducción a la Programación",
+      "date": "6 de noviembre a 20 de noviembre",
+      "hour": "09:00 - 11:00",
+      "id": 2
+    },
+    {
+      "student_id": 1,
+      "course_id": 5,
+      "course_name": "Introducción a la Programación",
+      "date": "21 de noviembre a 5 de diciembre",
+      "hour": "13:00 - 15:00",
+      "id": 3
+    },
+    {
+      "student_id": 14,
+      "course_id": 36,
+      "course_name": "Bases de Datos",
+      "date": "6 de diciembre a 20 de diciembre",
+      "hour": "20:00 - 22:00",
+      "id": 4
+    },
+    {
+      "student_id": 14,
+      "course_id": 3,
+      "course_name": "Introducción a la Programación",
+      "date": "6 de noviembre a 20 de noviembre",
+      "hour": "20:00 - 22:00",
+      "id": 5
+    },
+    {
+      "student_id": 14,
+      "course_id": 20,
+      "course_name": "Desarrollo Web",
+      "date": "6 de noviembre a 20 de noviembre",
+      "hour": "13:00 - 15:00",
+      "id": 6
+    },
+    {
+      "student_id": 4,
+      "course_id": 3,
+      "course_name": "Introducción a la Programación",
+      "date": "6 de noviembre a 20 de noviembre",
+      "hour": "20:00 - 22:00",
+      "id": 7
+    },
+    {
+      "student_id": 6,
+      "course_id": 6,
+      "course_name": "Introducción a la Programación",
+      "date": "21 de noviembre a 5 de diciembre",
+      "hour": "20:00 - 22:00",
+      "id": 8
+    },
+    {
+      "student_id": 48,
+      "course_id": 41,
+      "course_name": "Inteligencia Artificial",
+      "date": "21 de noviembre a 5 de diciembre",
+      "hour": "13:00 - 15:00",
+      "id": 9
+    },
+    {
+      "student_id": 50,
+      "course_id": 51,
+      "course_name": "Seguridad Informática",
+      "date": "21 de noviembre a 5 de diciembre",
+      "hour": "20:00 - 22:00",
+      "id": 10
+    },
+    {
+      "student_id": 2,
+      "course_id": 16,
+      "course_name": "Programación Avanzada",
+      "date": "6 de diciembre a 20 de diciembre",
+      "hour": "09:00 - 11:00",
+      "id": 11
     }
   ],
   "teacherEnrollments": []

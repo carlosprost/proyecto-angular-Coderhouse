@@ -8,17 +8,10 @@ import { StudentEnrollments } from 'src/app/interfaces/student-enrollments';
   styleUrls: ['./student-course-table.component.scss']
 })
 export class StudentCourseTableComponent {
-  @Input() course!: Course[]
   @Input() studentCourses!: StudentEnrollments[]
   columns: string[] = ['course_id', 'date', 'hour'];
 
-  constructor() {
-    console.log(this.studentCourses);
-  }
+  constructor() {}
 
-  courseName(id: number){
-    let course: Course | undefined = this.course.find(course => course.id === id)
-    return course ? course.name : '';
-  }
 
 }

@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, OnDestroy } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, distinctUntilChanged, map, toArray } from 'rxjs';
+import { Observable, Subscription, distinctUntilChanged, map, toArray } from 'rxjs';
 import { Course } from 'src/app/interfaces/courses';
 import { StudentEnrollments } from 'src/app/interfaces/student-enrollments';
 import { Student } from 'src/app/interfaces/students';
@@ -14,7 +14,8 @@ import { StudentsService } from 'src/app/services/students.service';
   templateUrl: './student-detail.component.html',
   styleUrls: ['./student-detail.component.scss'],
 })
-export class StudentDetailComponent {
+export class StudentDetailComponent implements OnDestroy {
+  idStudent: number;
   student$: Observable<Student> = this.studentsService.getStudent(
     this.activatedRoute.snapshot.params['id']
   );
@@ -27,6 +28,9 @@ export class StudentDetailComponent {
   enroll$: Observable<StudentEnrollments[]> =
     this.sEnroll.getStudentEnrollments$();
 
+  createEnroll!: Subscription
+  filterEnroll!: Subscription
+
   studentEnrollment: FormGroup;
 
   constructor(
@@ -36,21 +40,27 @@ export class StudentDetailComponent {
     private sEnroll: StudentEnrollmentsService,
     private fb: FormBuilder
   ) {
-    this.sEnroll.loadStudentEnrollments$(
-      parseInt(this.activatedRoute.snapshot.params['id'])
-    );
+    this.idStudent = parseInt(this.activatedRoute.snapshot.params['id']);
+    console.log(this.idStudent);
+    
 
-    /* this.enroll$ = this.sEnroll.getStudentEnrollments$() */
+    this.sEnroll.loadStudentEnrollments$(this.idStudent);
 
     this.studentEnrollment = this.fb.group({
-      student_id: this.activatedRoute.snapshot.params['id'],
-      course_id: '',
+      student_id: [this.idStudent, [Validators.required]],
+      course_id: ['', [Validators.required]],
     });
+  }
+  ngOnDestroy(): void {
+    this.filterEnroll.unsubscribe()
+    this.createEnroll.unsubscribe()
+    console.log('destroy');
+    
   }
 
   onSubmit() {
     let enrollment = {
-      student_id: parseInt(this.studentEnrollment.value.student_id),
+      student_id: this.studentEnrollment.value.student_id,
       course_id: this.studentEnrollment.value.course_id.id,
       course_name: this.studentEnrollment.value.course_id.name,
       date: this.studentEnrollment.value.course_id.date,
@@ -61,31 +71,34 @@ export class StudentDetailComponent {
   }
 
   createStudentEnrollment(studentEnrollment: StudentEnrollments) {
-    this.enroll$.subscribe({
-      next: (data) => {
-        if (
-          data.some(
-            (enroll) =>
-              enroll.course_id !== studentEnrollment.course_id &&
-              enroll.course_name !== studentEnrollment.course_name &&
-              enroll.date !== studentEnrollment.date &&
-              enroll.hour !== studentEnrollment.hour
+    this.filterEnroll = this.enroll$
+      .pipe(
+        map((enrollment) =>
+          enrollment.filter((enroll) =>
+            this.existeCurso(enroll, studentEnrollment)
           )
-        ) {
+        )
+      )
+      .subscribe((data) => {
+
+        if (data.length === 0) {
           this.crearYSumarEnrollment(studentEnrollment);
-          
         }
+      });
+  }
+
+  crearYSumarEnrollment(studentEnrollment: StudentEnrollments) {
+    this.createEnroll = this.sEnroll.createStudentEnrollment$(studentEnrollment).subscribe({
+      next: (data) => {
+        this.sEnroll.loadStudentEnrollments$(this.idStudent);
       },
     });
   }
 
-  crearYSumarEnrollment(studentEnrollment: StudentEnrollments) {
-    this.sEnroll.createStudentEnrollment$(studentEnrollment).subscribe({
-      next: (data) => {
-        this.sEnroll.loadStudentEnrollments$(
-          parseInt(this.activatedRoute.snapshot.params['id'])
-        );
-      },
-    });
+  existeCurso(inscripto: StudentEnrollments, aInscribir: StudentEnrollments) {
+    return (
+      inscripto.course_id === aInscribir.course_id ||
+      inscripto.course_name === aInscribir.course_name
+    );
   }
 }

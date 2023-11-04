@@ -5,7 +5,7 @@
     <app-student-detail-table [studentDetail]="(studentSource$ | async) || []"></app-student-detail-table>
     <h3>Cursos del estudiante</h3>
     
-    <app-student-course-table [course]="(courses$ | async) || []" [studentCourses]="(enroll$ | async) || []"></app-student-course-table>
+    <app-student-course-table [studentCourses]="(enroll$ | async) || []"></app-student-course-table>
     </section>
     <section class="form-details">
         <form [formGroup]="studentEnrollment">
@@ -16,7 +16,7 @@
                 </mat-select>
             </mat-form-field>
             <div>
-                <button mat-raised-button color="primary" (click)="onSubmit()">Action</button>
+                <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="studentEnrollment.invalid">Inscribirse</button>
             </div>
         </form>
         
