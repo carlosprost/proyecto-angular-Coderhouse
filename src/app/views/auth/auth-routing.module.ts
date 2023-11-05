@@ -1,9 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthComponent } from './auth.component';
-import { ForgotenComponent } from './forgoten/forgoten.component';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
   {
@@ -12,15 +9,15 @@ const routes: Routes = [
     children: [
       {
         path: 'singin',
-        component: LoginComponent
+        loadChildren: () => import('./login/login.module').then(m => m.LoginModule)
     },
     {
         path: 'register',
-        component: RegisterComponent
+        loadChildren: () => import('./register/register.module').then(m => m.RegisterModule)
     },
     {
         path: 'forgot-password',
-        component: ForgotenComponent
+        loadChildren: () => import('./forgoten/forgoten.module').then(m => m.ForgotenModule)
     },
     {
         path: '**',

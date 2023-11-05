@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Student } from 'src/app/interfaces/students';
-import { StudentsService } from 'src/app/services/students.service';
+import { StudentsService } from 'src/app/core/services/students.service';
 import { DialogStudentComponent } from './components/dialog-student/dialog-student.component';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -16,7 +16,6 @@ export class StudentsComponent implements OnInit {
 
   constructor(private db: StudentsService, public dialog: MatDialog) {
     this.students$ = this.db.getStudents();
-
   }
 
   ngOnInit(): void {
@@ -96,11 +95,12 @@ export class StudentsComponent implements OnInit {
       map((students) =>
         students.filter(
           (s) =>
-            s.firstName.toLowerCase().includes(dato.target.value.toLowerCase()) ||
+            s.firstName
+              .toLowerCase()
+              .includes(dato.target.value.toLowerCase()) ||
             s.lastName.toLowerCase().includes(dato.target.value.toLowerCase())
         )
       )
-    )
-    
+    );
   }
 }

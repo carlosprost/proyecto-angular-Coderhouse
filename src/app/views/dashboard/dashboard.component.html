@@ -2,7 +2,7 @@
   <app-toolbar [title]="title" [drawer]="drawer"></app-toolbar>
 <mat-drawer-container class="drawer-container" autosize>
   <mat-drawer #drawer class="drawer-sidenav" mode="side">
-    <app-sidebar></app-sidebar>
+    <app-sidebar [drawer]="drawer"></app-sidebar>
   </mat-drawer>
 
   <div class="drawer-sidenav-content">

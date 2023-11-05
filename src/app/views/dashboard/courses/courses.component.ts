@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Course } from 'src/app/interfaces/courses';
-import { CoursesService } from 'src/app/services/courses.service';
+import { CoursesService } from 'src/app/core/services/courses.service';
 import { DialogCoursesComponent } from './components/dialog-courses/dialog-courses.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, map } from 'rxjs';
@@ -8,19 +8,21 @@ import { Observable, map } from 'rxjs';
 @Component({
   selector: 'app-courses',
   templateUrl: './courses.component.html',
-  styleUrls: ['./courses.component.scss']
+  styleUrls: ['./courses.component.scss'],
 })
 export class CoursesComponent {
   courses$: Observable<Course[]>;
-  constructor(private coursesServices: CoursesService, public dialog: MatDialog) {
-    this.courses$ = this.coursesServices.getCourses$()
-
-   }
+  constructor(
+    private coursesServices: CoursesService,
+    public dialog: MatDialog
+  ) {
+    this.courses$ = this.coursesServices.getCourses$();
+  }
 
   openDialog() {
     const course: Course = {
       id: 0,
-      name: ''
+      name: '',
     };
     const dialogRef = this.dialog.open(DialogCoursesComponent, {
       width: '500px',
@@ -83,16 +85,12 @@ export class CoursesComponent {
   }
 
   searchCourse(dato: any) {
-    console.log(dato?.target?.value);
-    
     this.courses$ = this.courses$.pipe(
       map((courses) =>
-        courses.filter(
-          (s) =>
-            s.name.toLowerCase().includes(dato.target.value.toLowerCase())
+        courses.filter((s) =>
+          s.name.toLowerCase().includes(dato.target.value.toLowerCase())
         )
       )
-    )
-    
+    );
   }
 }

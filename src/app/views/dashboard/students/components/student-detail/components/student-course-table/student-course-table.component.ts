@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Course } from 'src/app/interfaces/courses';
 import { StudentEnrollments } from 'src/app/interfaces/student-enrollments';
 
@@ -9,7 +9,8 @@ import { StudentEnrollments } from 'src/app/interfaces/student-enrollments';
 })
 export class StudentCourseTableComponent {
   @Input() studentCourses!: StudentEnrollments[]
-  columns: string[] = ['course_id', 'date', 'hour'];
+  @Output() deleteCourse: EventEmitter<number> = new EventEmitter();
+  columns: string[] = ['course_id', 'date', 'hour', 'actions'];
 
   constructor() {}
 

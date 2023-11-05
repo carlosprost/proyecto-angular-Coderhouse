@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ForgotenComponent } from './forgoten.component';
+import { ForgotenRoutingModule } from './forgoten-routing.module';
 
 
 
@@ -9,7 +10,8 @@ import { ForgotenComponent } from './forgoten.component';
     ForgotenComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ForgotenRoutingModule
   ],
   exports: [
     ForgotenComponent

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { TeachersRoutingModule } from './teachers-routing.module';
 import { TeachersComponent } from './teachers.component';
-import { TeachersService } from 'src/app/services/teachers.service';
+import { TeachersService } from 'src/app/core/services/teachers.service';
 import { DialogTeachersComponent } from './components/dialog-teachers/dialog-teachers.component';
 import { TableTeachersComponent } from './components/table-teachers/table-teachers.component';
 

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UsersService } from 'src/app/services/users.service';
+import { FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { User } from 'src/app/interfaces/users';
+import { UsersService } from 'src/app/core/services/users.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -11,49 +13,65 @@ import Swal from 'sweetalert2';
 export class RegisterComponent {
   formRegister: FormGroup;
 
-  constructor(private fb: FormBuilder, private usersService: UsersService) {
+  constructor(
+    private fb: FormBuilder,
+    private usersService: UsersService,
+    private router: Router
+  ) {
     this.formRegister = this.fb.group({
       name: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
     });
+
+    this.formRegister.get('confirmPassword')?.setValidators(this.passwordValidator());
   }
 
   register() {
     if (
-      this.formRegister.valid &&
-      this.formRegister.value.password ===
-      this.formRegister.value.confirmPassword
+      this.formRegister.invalid &&
+      this.formRegister.get('password')?.value !==
+      this.formRegister.get('confirmPassword')?.value
     ) {
-      this.usersService.createUser(this.formRegister.value).subscribe({
+      this.formRegister.markAllAsTouched();
+    } else {
+      let user: User = {
+        name: `${this.formRegister.value.name} ${this.formRegister.value.lastName}`,
+        email: this.formRegister.value.email,
+        password: this.formRegister.value.password,
+      };
+
+      this.usersService.createUser(user).subscribe({
         next: (res) => {
-          console.log(res);
           Swal.fire('Success', 'User registered successfully', 'success');
-          window.location.href = '/login';
+          this.router.navigate(['/login']);
         },
         error: (err) => {
           console.log(err);
           Swal.fire('Error', 'Error registering user', 'error');
         },
       });
-      
     }
   }
 
   onCancel() {
     this.formRegister.reset();
-    window.location.href = '/login';
+    this.router.navigate(['/login']);
   }
 
-  confirmPassword() {
-    let password = this.formRegister.get('password');
-    let confirmPassword = this.formRegister.get('confirmPassword');
-    if (password && confirmPassword) {
-      return password.value === confirmPassword.value
-        ? confirmPassword.setErrors(null)
-        : confirmPassword.setErrors({ notSame: true });
-    }
+  passwordValidator(): ValidatorFn {
+    return () => {
+
+      const password = this.formRegister.get('password')?.value;
+      const repeat_password = this.formRegister.get('confirmPassword')?.value;
+
+      if(!password || !repeat_password) return { isValid: false };
+
+      if(password!==repeat_password) return {isValid:false};      
+      
+      return null;
+    };
   }
 }

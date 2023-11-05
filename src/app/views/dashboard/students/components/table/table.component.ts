@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { DataTable } from 'src/app/interfaces/data-table';
 import { Student } from 'src/app/interfaces/students';
 

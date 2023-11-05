@@ -5,7 +5,7 @@
     <app-student-detail-table [studentDetail]="(studentSource$ | async) || []"></app-student-detail-table>
     <h3>Cursos del estudiante</h3>
     
-    <app-student-course-table [studentCourses]="(enroll$ | async) || []"></app-student-course-table>
+    <app-student-course-table [studentCourses]="(enroll$ | async) || []" (deleteCourse)="deleteCourse($event)"></app-student-course-table>
     </section>
     <section class="form-details">
         <form [formGroup]="studentEnrollment">

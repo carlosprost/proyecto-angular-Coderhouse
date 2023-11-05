@@ -10,6 +10,9 @@
                     <span>Nombre</span>
                 </mat-label>
                 <input matInput placeholder="Nombre" formControlName="name" required>
+                <mat-error>
+                    {{ formRegister.get("name") | formRegisterError }}
+                </mat-error>
             </mat-form-field>
 
             <!-- Apellido -->
@@ -19,6 +22,9 @@
                     <span>Apellido</span>
                 </mat-label>
                 <input matInput placeholder="Apellido" formControlName="lastName" required>
+                <mat-error>
+                    {{ formRegister.get("lastName") | formRegisterError }}
+                </mat-error>
             </mat-form-field>
 
             <!-- Email -->
@@ -27,7 +33,10 @@
                     <mat-icon>mail</mat-icon>
                     <span>Email</span>
                 </mat-label>
-                <input matInput placeholder="Email"  formControlName="email" required>
+                <input matInput placeholder="Email" formControlName="email" required>
+                <mat-error>
+                    {{ formRegister.get("email") | formRegisterError }}
+                </mat-error>
             </mat-form-field>
 
             <!-- Contraseña -->
@@ -37,6 +46,9 @@
                     <span>Contraseña</span>
                 </mat-label>
                 <input matInput type="password" formControlName="password" required>
+                <mat-error>
+                    {{ formRegister.get("password") | formRegisterError }}
+                </mat-error>
             </mat-form-field>
 
             <!-- Confirma Contraseña -->
@@ -47,13 +59,13 @@
                 </mat-label>
                 <input matInput type="password" formControlName="confirmPassword" required>
 
-                <mat-error *ngIf="formRegister.controls['confirmPassword'].hasError('confirmPassword')">
-                    No coinciden las contraseñas
+                <mat-error>
+                    {{ formRegister.get("confirmPassword") | formRegisterError: formRegister.get("password")?.value }}
                 </mat-error>
             </mat-form-field>
             <div class="btn">
                 <button mat-raised-button color="secondary" (click)="onCancel()">Cancelar</button>
-                <button mat-raised-button color="primary" (click)="register()">Registrarse</button>
+                <button mat-raised-button color="primary" (click)="register()" [disabled]="formRegister.invalid">Registrarse</button>
             </div>
         </form>
 
