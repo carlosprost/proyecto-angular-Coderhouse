@@ -1,9 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthComponent } from './views/auth/auth.component';
-import { LoginComponent } from './views/auth/login/login.component';
-import { RegisterComponent } from './views/auth/register/register.component';
-import { ForgotenComponent } from './views/auth/forgoten/forgoten.component';
 import { dashboardGuard } from './core/guards/dashboard.guard';
 
 const routes: Routes = [
@@ -13,7 +9,7 @@ const routes: Routes = [
     },
     {
         path: 'dashboard',
-        /* canActivate: [dashboardGuard], */
+        canActivate: [dashboardGuard],
         loadChildren: () => import('./views/dashboard/dashboard.module').then(m => m.DashboardModule)
     },
     {

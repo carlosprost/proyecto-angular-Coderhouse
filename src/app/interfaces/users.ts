@@ -5,3 +5,8 @@ export interface User {
     password: string;
 }
 
+export interface UserActive {
+    name: string;
+    email: string;
+}
+
