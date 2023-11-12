@@ -4,6 +4,7 @@ import { MaterialModule } from './material/material.module';
 import { FullnamePipe } from './pipes/fullname.pipe';
 import { StatusPipe } from './pipes/status.pipe';
 import { FormRegisterErrorPipe } from './pipes/form-register.pipe';
+import { TeacherInCoursePipe } from './pipes/teacher-in-course.pipe';
 
 
 
@@ -12,7 +13,8 @@ import { FormRegisterErrorPipe } from './pipes/form-register.pipe';
   declarations: [
     StatusPipe,
     FullnamePipe,
-    FormRegisterErrorPipe
+    FormRegisterErrorPipe,
+    TeacherInCoursePipe
   ],
   imports: [
     CommonModule
@@ -21,6 +23,7 @@ import { FormRegisterErrorPipe } from './pipes/form-register.pipe';
     MaterialModule,
     FullnamePipe,
     StatusPipe,
+    TeacherInCoursePipe,
     FormRegisterErrorPipe
   ]
 })

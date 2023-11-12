@@ -41,4 +41,9 @@ export class StudentsService {
   updateStudent(id: number, student: Student) {
     return this.http.put(`${this.URL}/${id}`, student);
   }
+
+  countStudents() {
+    this.loadStudents();
+    return this.studentesObservarble$
+  }
 }

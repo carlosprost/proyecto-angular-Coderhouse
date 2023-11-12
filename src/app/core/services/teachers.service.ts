@@ -9,12 +9,12 @@ export class TeachersService {
   URL: string = 'http://localhost:3000/teachers';
   constructor(private http: HttpClient) {}
 
-  getTeachers() {
+  getTeachers$() {
     return this.http.get<Teacher[]>(this.URL);
   }
 
-  getTeacher(id: number) {
-    return this.http.get<Teacher>(`${this.URL}/${id}`);
+  getTeacher$(id: number) {
+    return this.http.get<Teacher[]>(`${this.URL}/${id}`);
   }
 
   createTeacher(teacher: Teacher) {

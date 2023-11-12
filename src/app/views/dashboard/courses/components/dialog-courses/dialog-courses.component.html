@@ -1,1 +1,54 @@
-<p>dialog-courses works!</p>
+<h2 mat-dialog-title>{{ data.message }}</h2>
+<div mat-dialog-content class="formStyle">
+  <form class="formulario" [formGroup]="formCourse">
+    <mat-form-field>
+      <mat-label>Nombre del Curso</mat-label>
+      <input matInput formControlName="name" />
+      <mat-hint>Escriba el nombre del curso</mat-hint>
+      <mat-error *ngIf="formCourse.controls['name'].hasError('required')">
+        Este campo es <strong>requerido</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>periodo de dictado</mat-label>
+      <input matInput formControlName="date" />
+      <mat-hint>Indique el periodo de dictado del curso</mat-hint>
+      <mat-error *ngIf="formCourse.controls['date'].hasError('required')">
+        Este campo es <strong>requerido</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Horario</mat-label>
+      <input matInput formControlName="hour" />
+      <mat-hint>Horario del curso</mat-hint>
+      <mat-error *ngIf="formCourse.controls['hour'].hasError('required')">
+        Este campo es <strong>requerido</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Profesor</mat-label>
+      <mat-select formControlName="teacher">
+        <mat-option *ngFor="let teacher of (teachers$ | async) || []" [value]="teacher.id">{{teacher.firstName + ' ' + teacher.lastName }}</mat-option>
+      </mat-select>
+      <mat-hint>Seleccione el estado del alumno</mat-hint>
+      <mat-error *ngIf="formCourse.controls['teacher'].hasError('required')">
+        Este campo es <strong>requerido</strong>
+      </mat-error>
+    </mat-form-field>
+  </form>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="dialogClose()">Cancelar</button>
+  <button
+    mat-button
+    type="submit"
+    [disabled]="formCourse.invalid"
+    (click)="onSubmit()"
+  >
+    Aceptar
+  </button>
+</div>

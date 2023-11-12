@@ -26,6 +26,6 @@ export class CoursesService {
   }
 
   updateCourse(id: number, course: Course) {
-    return this.http.put(`${this.URL}/${id}`, course);
+    return this.http.put<Course>(`${this.URL}/${id}`, course);
   }
 }

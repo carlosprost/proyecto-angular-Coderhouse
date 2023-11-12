@@ -1,1 +1,19 @@
-<p>teachers works!</p>
+<section class="student">
+    <section class="tableStudent">
+        <section class="searchStudents">
+            <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Buscar estudiante</mat-label>
+                <input matInput (keyup)="searchTeacher($event)">
+            </mat-form-field>
+        </section>
+        <section class="buttonActions">
+            <button mat-button color="primary" (click)="openDialog()">Nuevo Estudiante</button>
+        </section>
+        <app-table-teachers
+            [data]="(teachers$ | async) || []"
+            (deleteElement)="deleteTeacher($event)"
+            (editElement)="openDialogEdit($event)"
+            ></app-table-teachers>
+    </section>
+    
+</section>

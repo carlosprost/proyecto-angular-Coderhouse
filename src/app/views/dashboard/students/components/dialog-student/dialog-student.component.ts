@@ -19,6 +19,7 @@ export class DialogStudentComponent {
     public dialogRef: MatDialogRef<DialogStudentComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DataDialog,
     ) {
+      console.log('data', data);
       
     this.createFormStudent(data.data)
    }
@@ -28,12 +29,24 @@ export class DialogStudentComponent {
    }
 
    createFormStudent(student: Student){
-    this.formStudent = this.fb.group({
-      firstName: [student.firstName, [Validators.required]],
-      lastName: [student.lastName, [Validators.required]],
-      age: [student.age, [Validators.required]],
-      status: [student.status, [Validators.required]]
-    })
+    console.log('student', student);
+    
+    if(student){
+      this.formStudent = this.fb.group({
+        firstName: [student.firstName, [Validators.required]],
+        lastName: [student.lastName, [Validators.required]],
+        age: [student.age, [Validators.required]],
+        status: [student.status, [Validators.required]]
+      })
+    }else{
+      this.formStudent = this.fb.group({
+        firstName: ['', [Validators.required]],
+        lastName: ['', [Validators.required]],
+        age: ['', [Validators.required]],
+        status: ['', [Validators.required]]
+      })
+    }
+    
    }
 
    onSubmit() {

@@ -4,6 +4,8 @@ import { CoursesService } from 'src/app/core/services/courses.service';
 import { DialogCoursesComponent } from './components/dialog-courses/dialog-courses.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, map } from 'rxjs';
+import { Teacher } from 'src/app/interfaces/teachers';
+import { TeachersService } from 'src/app/core/services/teachers.service';
 
 @Component({
   selector: 'app-courses',
@@ -12,21 +14,31 @@ import { Observable, map } from 'rxjs';
 })
 export class CoursesComponent {
   courses$: Observable<Course[]>;
+  teachers$: Observable<Teacher[]>;
   constructor(
     private coursesServices: CoursesService,
+    private teacherService: TeachersService,
     public dialog: MatDialog
   ) {
     this.courses$ = this.coursesServices.getCourses$();
+    this.teachers$ = this.teacherService.getTeachers$();
   }
 
   openDialog() {
     const course: Course = {
       id: 0,
       name: '',
+      date: '',
+      hour: '',
+      teacher_id: 0,
     };
     const dialogRef = this.dialog.open(DialogCoursesComponent, {
       width: '500px',
-      data: { message: 'Crear Curso', course: course, isUpdate: false },
+      data: {
+        message: 'Crear Curso',
+        data: { course: course, teacher: this.teachers$ },
+        isUpdate: false,
+      },
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -41,7 +53,7 @@ export class CoursesComponent {
         width: '500px',
         data: {
           message: 'Editar curso',
-          Course: Course,
+          data: { course: Course, teacher: this.teachers$ },
           isUpdate: true,
         },
       });
@@ -65,9 +77,9 @@ export class CoursesComponent {
 
   updateCourse(id: number, course: Course) {
     this.coursesServices.updateCourse(id, course).subscribe({
-      next: (data) => {
+      next: (data: Course) => {
         this.courses$ = this.courses$.pipe(
-          map((courses) => courses.map((s) => (s.id === id ? course : s)))
+          map((courses) => courses.map((s) => (s.id === id ? data : s)))
         );
       },
       error: (error) => {

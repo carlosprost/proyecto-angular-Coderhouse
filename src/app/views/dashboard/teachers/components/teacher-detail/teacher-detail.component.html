@@ -1,0 +1,13 @@
+<section class="teacher-detail">
+  <section class="details">
+    <section class="teacher-data">
+      <h3>Datos del profesor</h3>
+      <app-teacher-detail-table-datos [teacher]="(teacher$ | async) || []"></app-teacher-detail-table-datos>
+    </section>
+
+    <section class="course-teacher">
+      <h3>Cursos del profesor</h3>
+      <app-teacher-detail-table-course [courses]="(courses$ | async) || []"></app-teacher-detail-table-course>
+    </section>
+  </section>
+</section>

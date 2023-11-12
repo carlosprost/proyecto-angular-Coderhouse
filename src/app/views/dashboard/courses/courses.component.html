@@ -11,6 +11,7 @@
         </section>
         <app-table-courses
             [dataSource]="(courses$ | async) || []"
+            [teachers]="(teachers$ | async) || []"
             (deleteElement)="deleteCourse($event)"
             (editElement)="openDialogEdit($event)"
             ></app-table-courses>

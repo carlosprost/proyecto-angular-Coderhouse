@@ -1,5 +1,3 @@
-import { Teacher } from "./teachers";
-
 export interface Course {
     id?: number;
     name: string;

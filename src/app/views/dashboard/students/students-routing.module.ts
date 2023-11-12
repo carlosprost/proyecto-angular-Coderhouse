@@ -6,17 +6,16 @@ import { StudentDetailComponent } from './components/student-detail/student-deta
 const routes: Routes = [
   {
     path: '',
-    component : StudentsComponent,
-    
+    component: StudentsComponent,
   },
   {
     path: 'detail/:id',
-    component: StudentDetailComponent
-}
+    component: StudentDetailComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class StudentsRoutingModule { }
+export class StudentsRoutingModule {}

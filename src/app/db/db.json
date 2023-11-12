@@ -72,6 +72,16 @@
       "user_id": 1,
       "createSession": "2023-11-11T06:14:25.547Z",
       "id": 13
+    },
+    {
+      "user_id": 1,
+      "createSession": "2023-11-12T02:44:30.854Z",
+      "id": 14
+    },
+    {
+      "user_id": 1,
+      "createSession": "2023-11-12T06:23:59.778Z",
+      "id": 15
     }
   ],
   "students": [
@@ -79,14 +89,14 @@
       "firstName": "Carlos",
       "lastName": "Perez",
       "age": 28,
-      "status": true,
+      "status": false,
       "id": 1
     },
     {
       "firstName": "Ana",
       "lastName": "Gomez",
       "age": 42,
-      "status": false,
+      "status": true,
       "id": 2
     },
     {
@@ -107,7 +117,7 @@
       "firstName": "Luis",
       "lastName": "Sanchez",
       "age": 22,
-      "status": false,
+      "status": true,
       "id": 5
     },
     {
@@ -410,20 +420,6 @@
       "age": 34,
       "status": true,
       "id": 48
-    },
-    {
-      "firstName": "Liliana",
-      "lastName": "Fernandez",
-      "age": 31,
-      "status": false,
-      "id": 49
-    },
-    {
-      "firstName": "Carlos Alberto",
-      "lastName": "Prost",
-      "age": 35,
-      "status": true,
-      "id": 50
     }
   ],
   "teachers": [
@@ -523,41 +519,46 @@
       "lastName": "Luna"
     },
     {
-      "id": 20,
       "firstName": "Gabriel",
-      "lastName": "Navarro"
+      "lastName": "Navarro del Mar",
+      "id": 20
     }
   ],
   "courses": [
     {
-      "id": 1,
       "name": "Introducción a la Programación",
       "date": "6 de noviembre a 20 de noviembre",
-      "hour": "09:00 - 11:00"
+      "hour": "09:00 - 11:00",
+      "teacher_id": 10,
+      "id": 1
     },
     {
-      "id": 2,
       "name": "Introducción a la Programación",
       "date": "6 de noviembre a 20 de noviembre",
-      "hour": "13:00 - 15:00"
+      "hour": "13:00 - 15:00",
+      "teacher_id": 3,
+      "id": 2
     },
     {
-      "id": 3,
       "name": "Introducción a la Programación",
       "date": "6 de noviembre a 20 de noviembre",
-      "hour": "20:00 - 22:00"
+      "hour": "20:00 - 22:00",
+      "teacher_id": 4,
+      "id": 3
     },
     {
-      "id": 4,
       "name": "Introducción a la Programación",
       "date": "21 de noviembre a 5 de diciembre",
-      "hour": "09:00 - 11:00"
+      "hour": "09:00 - 11:00",
+      "teacher_id": 12,
+      "id": 4
     },
     {
-      "id": 5,
       "name": "Introducción a la Programación",
       "date": "21 de noviembre a 5 de diciembre",
-      "hour": "13:00 - 15:00"
+      "hour": "13:00 - 15:00",
+      "teacher_id": 1,
+      "id": 5
     },
     {
       "id": 6,
@@ -596,10 +597,11 @@
       "hour": "13:00 - 15:00"
     },
     {
-      "id": 12,
       "name": "Programación Avanzada",
       "date": "6 de noviembre a 20 de noviembre",
-      "hour": "20:00 - 22:00"
+      "hour": "20:00 - 22:00",
+      "teacher_id": 1,
+      "id": 12
     },
     {
       "id": 13,
@@ -878,7 +880,14 @@
       "date": "6 de diciembre a 20 de diciembre",
       "hour": "20:00 - 22:00",
       "id": 3
+    },
+    {
+      "student_id": 1,
+      "course_id": 40,
+      "course_name": "Inteligencia Artificial",
+      "date": "21 de noviembre a 5 de diciembre",
+      "hour": "09:00 - 11:00",
+      "id": 4
     }
-  ],
-  "teacherEnrollments": []
+  ]
 }

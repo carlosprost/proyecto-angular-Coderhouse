@@ -7,8 +7,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { CoursesComponent } from './courses.component';
 import { DialogCoursesComponent } from './components/dialog-courses/dialog-courses.component';
 import { TableCoursesComponent } from './components/table-courses/table-courses.component';
-import { MaterialModule } from 'src/app/shared/material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +19,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     CoursesRoutingModule,
-    MaterialModule,
+    SharedModule,
     ReactiveFormsModule,
     HttpClientModule,
   ],

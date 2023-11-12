@@ -1,9 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Student } from 'src/app/interfaces/students';
 import { StudentsService } from 'src/app/core/services/students.service';
 import { DialogStudentComponent } from './components/dialog-student/dialog-student.component';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -32,7 +32,7 @@ export class StudentsComponent implements OnInit {
     };
     const dialogRef = this.dialog.open(DialogStudentComponent, {
       width: '500px',
-      data: { message: 'Crear estudiante', student: student, isUpdate: false },
+      data: { message: 'Crear estudiante', data: student, isUpdate: false },
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -42,12 +42,16 @@ export class StudentsComponent implements OnInit {
   }
 
   openDialogEdit(id: number) {
+    console.log(id);
+    
     this.db.getStudent(id).subscribe((student: Student) => {
+      console.log('student', student);
+      
       const dialogRef = this.dialog.open(DialogStudentComponent, {
         width: '500px',
         data: {
           message: 'Editar estudiante',
-          student: student,
+          data: student,
           isUpdate: true,
         },
       });
@@ -70,6 +74,8 @@ export class StudentsComponent implements OnInit {
   }
 
   updateStudent(id: number, student: Student) {
+    console.log('student', student);
+    
     this.db.updateStudent(id, student).subscribe({
       next: (data) => {
         this.students$ = this.students$.pipe(

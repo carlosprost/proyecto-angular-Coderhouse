@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Course } from 'src/app/interfaces/courses';
-import { DataTable } from 'src/app/interfaces/data-table';
+import { Teacher } from 'src/app/interfaces/teachers';
 
 @Component({
   selector: 'app-table-courses',
@@ -10,7 +10,9 @@ import { DataTable } from 'src/app/interfaces/data-table';
 export class TableCoursesComponent {
   @Input() dataSource!: Course[];
 
-  columns: string[] = ['id', 'name', 'date', 'hour', 'actions'];
+  @Input() teachers: Teacher[] = [];
+
+  columns: string[] = ['id', 'name', 'date', 'hour', 'teacher', 'actions'];
 
   @Output() editElement: EventEmitter<number> = new EventEmitter();
   @Output() deleteElement: EventEmitter<number> = new EventEmitter();
