@@ -1,1 +1,83 @@
-<p>home works!</p>
+<section class="home-section">
+  <h2>Area de estadísticas</h2>
+  <section class="cards">
+    <section class="cards-row">
+      <mat-card class="card">
+        <mat-card-header>
+          <mat-card-title>Estudiantes</mat-card-title>
+          <!-- <mat-card-subtitle></mat-card-subtitle> -->
+        </mat-card-header>
+        <canvas
+          baseChart
+          [type]="'bar'"
+          [legend]="true"
+          [datasets]="studentData"
+          [labels]="studentLabels"
+          [options]="studentOptions"
+        ></canvas>
+        <mat-card-content>
+          <p>
+             {{nroStudents}}
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button>LIKE</button>
+          <button mat-button>SHARE</button>
+        </mat-card-actions>
+      </mat-card>
+
+      <mat-card class="card">
+        <mat-card-header>
+          <mat-card-title>Profesores</mat-card-title>
+          <!-- <mat-card-subtitle></mat-card-subtitle> -->
+        </mat-card-header>
+        <canvas
+          baseChart
+          [type]="'bar'"
+          [legend]="true"
+          [datasets]="teacherData"
+          [labels]="teacherLabels"
+          [options]="teacherOptions"
+        ></canvas>
+        <mat-card-content>
+          <p>
+             {{nroTeachers}}
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button>LIKE</button>
+          <button mat-button>SHARE</button>
+        </mat-card-actions>
+      </mat-card>
+    </section>
+
+
+    <section class="cards-row">
+        <mat-card class="card">
+          <mat-card-header>
+            <mat-card-title>Cursos</mat-card-title>
+            <!-- <mat-card-subtitle></mat-card-subtitle> -->
+          </mat-card-header>
+          <canvas
+            baseChart
+            [type]="'bar'"
+            [legend]="true"
+            [datasets]="courseData"
+            [labels]="courseLabels"
+            [options]="courseOptions"
+          ></canvas>
+          <mat-card-content>
+            <p>
+               {{nroCourses}}
+            </p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button>LIKE</button>
+            <button mat-button>SHARE</button>
+          </mat-card-actions>
+        </mat-card>
+      </section>
+
+      
+  </section>
+</section>

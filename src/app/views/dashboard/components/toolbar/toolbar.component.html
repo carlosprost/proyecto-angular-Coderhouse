@@ -10,7 +10,7 @@
   <span>{{ title }}</span>
 
   <span class="spacer"></span>
-  <button mat-button [matMenuTriggerFor]="menu">{{ user.name }}</button>
+  <button mat-button [matMenuTriggerFor]="menu">{{ user }}</button>
   <mat-menu #menu="matMenu">
     <button mat-menu-item (click)="logOut()">Cerrar Sesión</button>
   </mat-menu>

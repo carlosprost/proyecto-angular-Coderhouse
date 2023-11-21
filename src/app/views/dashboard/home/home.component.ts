@@ -15,6 +15,44 @@ export class HomeComponent {
   nroTeachers: number = 0;
   nroCourses: number = 0;
 
+  studentData = [
+    {
+      label: 'Students',
+      data: [this.nroStudents]
+    }
+  ]
+
+  teacherData = [
+    {
+      label: 'Teachers',
+      data: [this.nroTeachers]
+    }
+  ]
+
+  courseData = [
+    {
+      label: 'Courses',
+      data: [this.nroCourses]
+    }
+  ]
+
+  studentLabels = ['Students'];
+
+  teacherLabels = ['Teachers'];
+
+  courseLabels = ['Courses'];
+
+  studentOptions = {
+    responsive: true,
+  }
+
+  teacherOptions = {
+    responsive: true,
+  }
+
+  courseOptions = {
+    responsive: true,
+  }
 
   constructor(
     private router: Router,
@@ -22,33 +60,25 @@ export class HomeComponent {
     private teachersService: TeachersService,
     private coursesServices: CoursesService,
   ) {
-    this.studentsService.countStudents().subscribe({
-      next: (data) => {
-        this.nroStudents = data.length;
-        console.log('Nro. de Estudiantes: ', this.nroStudents);
-        
+    this.studentsService.countStudents$().subscribe({
+      next: (nro) => {
+        this.nroStudents = nro;
       }
     })
 
-    this.teachersService.getTeachers$().subscribe({
-      next: (data) => {
-        this.nroTeachers = data.length;
-        console.log('Nro. de Profesores: ', this.nroTeachers);
-        
+    this.teachersService.countTeachers$().subscribe({
+      next: (nro) => {
+        this.nroTeachers = nro;
       }
     })
 
-    this.coursesServices.getCourses$().subscribe({
-      next: (data) => {
-        this.nroCourses = data.length;
-        console.log('Nro. de Cursos: ', this.nroCourses);
+    this.coursesServices.countCourses$().subscribe({
+      next: (nro) => {
+        this.nroCourses = nro;
       }
     })
+  }
 
 
-    console.log(this.nroStudents, this.nroTeachers, this.nroCourses);
-    
-    
-   }
 
 }

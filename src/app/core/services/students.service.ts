@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Student } from '../../interfaces/students';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -42,8 +42,10 @@ export class StudentsService {
     return this.http.put(`${this.URL}/${id}`, student);
   }
 
-  countStudents() {
+  countStudents$() {
     this.loadStudents();
-    return this.studentesObservarble$
+    return this.studentesObservarble$.pipe(
+      map((students) => students.length)
+    )
   }
 }

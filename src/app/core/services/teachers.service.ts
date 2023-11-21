@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Teacher } from '../../interfaces/teachers';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -27,5 +28,11 @@ export class TeachersService {
 
   updateTeacher(id: number, teacher: Teacher) {
     return this.http.put(`${this.URL}/${id}`, teacher);
+  }
+
+  countTeachers$() {
+    return this.http
+      .get<Teacher[]>(this.URL)
+      .pipe(map((teachers) => teachers.length));
   }
 }
