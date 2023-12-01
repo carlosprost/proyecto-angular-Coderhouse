@@ -9,6 +9,13 @@
   align-items: center;
   overflow: auto;
 
+  h2{
+    font-size: 2rem;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 10px;
+  }
+
   .cards {
     width: 100%;
     height: 100%;
@@ -16,6 +23,18 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    .titulo{
+      width: 70%;
+
+      h3{
+        font-size: 1.5rem;
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 10px;
+      }
+
+    }
 
     .cards-row{
         width: 100%;
