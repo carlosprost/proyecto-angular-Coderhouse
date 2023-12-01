@@ -2,7 +2,7 @@
 <section class="student-detail">
     <section class="details">
         <h3>Datos del estudiante</h3>
-    <app-student-detail-table [studentDetail]="(studentSource$ | async) || []"></app-student-detail-table>
+    <app-student-detail-table [studentDetail]="(student$ | async) || []"></app-student-detail-table>
     <h3>Cursos del estudiante</h3>
     
     <app-student-course-table [studentCourses]="(enroll$ | async) || []" (deleteCourse)="deleteCourse($event)"></app-student-course-table>
@@ -11,8 +11,8 @@
         <form [formGroup]="studentEnrollment">
             <mat-form-field>
                 <mat-label>Curso</mat-label>
-                <mat-select formControlName="course_id">
-                    <mat-option *ngFor="let course of courses$ | async" [value]="course">{{course.name}} - {{course.date}} - {{course.hour}}</mat-option>
+                <mat-select formControlName="coursesId">
+                    <mat-option *ngFor="let course of courses$ | async" [value]="course.id">{{course.name}} - {{course.date}} - {{course.hour}}</mat-option>
                 </mat-select>
             </mat-form-field>
             <div>

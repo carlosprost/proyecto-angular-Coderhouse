@@ -30,9 +30,4 @@ export class TeachersService {
     return this.http.put(`${this.URL}/${id}`, teacher);
   }
 
-  countTeachers$() {
-    return this.http
-      .get<Teacher[]>(this.URL)
-      .pipe(map((teachers) => teachers.length));
-  }
 }

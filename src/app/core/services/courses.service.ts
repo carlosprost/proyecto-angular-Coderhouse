@@ -19,18 +19,15 @@ export class CoursesService {
   }
 
   createCourse(course: Course) {
-    return this.http.post(this.URL, course);
+    return this.http.post<Course>(this.URL, course);
   }
 
   deleteCourse(id: number) {
-    return this.http.delete(`${this.URL}/${id}`);
+    return this.http.delete<Course>(`${this.URL}/${id}`);
   }
 
   updateCourse(id: number, course: Course) {
     return this.http.put<Course>(`${this.URL}/${id}`, course);
   }
 
-  countCourses$() {
-    return this.http.get<Course[]>(this.URL).pipe(map((courses) => courses.length));
-  }
 }

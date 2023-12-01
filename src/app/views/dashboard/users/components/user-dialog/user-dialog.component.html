@@ -1,0 +1,61 @@
+<h2 mat-dialog-title>{{ data.message }}</h2>
+<div mat-dialog-content class="formStyle">
+  <form class="formulario" [formGroup]="formUser">
+
+    <!-- Campo Nombre -->
+    <mat-form-field>
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="name" />
+      <mat-hint>Escriba los nombres del usuario</mat-hint>
+      <mat-error *ngIf="formUser.controls['name'].hasError('required')">
+        Este campo es <strong>requerido</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Campo email -->
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" />
+      <mat-hint>Eg. mail&#64;mail.com</mat-hint>
+      <mat-error *ngIf="formUser.controls['email'].hasError('required')">
+        Este campo es <strong>requerido</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Campo rol -->
+    <mat-form-field>
+        <mat-label>Rol</mat-label>
+        <mat-select formControlName="role">
+            <mat-option [value]="'ADMIN'">Admin</mat-option>
+            <mat-option [value]="'EMPLOYEE'">Empleado</mat-option>
+        </mat-select>
+        <mat-hint>Asigne el rol del usuario</mat-hint>
+      <mat-error *ngIf="formUser.controls['role'].hasError('required')">
+        Este campo es <strong>requerido</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Campo password -->
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input matInput formControlName="password" />
+      <mat-hint>La contraseña debe tener como mínimo 6 caracteres</mat-hint>
+      <mat-error *ngIf="formUser.controls['password'].hasError('required')">
+        Este campo es <strong>requerido</strong>
+      </mat-error>
+    </mat-form-field>
+
+  </form>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="dialogClose()">Cancelar</button>
+  <button
+    mat-button
+    type="submit"
+    [disabled]="formUser.invalid"
+    (click)="onSubmit()"
+  >
+    Aceptar
+  </button>
+</div>

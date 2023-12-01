@@ -9,6 +9,10 @@ import { DialogCoursesComponent } from './components/dialog-courses/dialog-cours
 import { TableCoursesComponent } from './components/table-courses/table-courses.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { EffectsModule } from '@ngrx/effects';
+import { CoursesEffects } from './store/courses.effects';
+import { StoreModule } from '@ngrx/store';
+import { coursesFeature } from './store/courses.reducer';
 
 @NgModule({
   declarations: [
@@ -22,6 +26,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     SharedModule,
     ReactiveFormsModule,
     HttpClientModule,
+    StoreModule.forFeature(coursesFeature),
+    EffectsModule.forFeature([CoursesEffects]),
   ],
   providers: [CoursesService],
   exports: [CoursesComponent],

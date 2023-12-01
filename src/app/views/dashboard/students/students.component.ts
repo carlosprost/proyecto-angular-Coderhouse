@@ -1,25 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Student } from 'src/app/interfaces/students';
 import { StudentsService } from 'src/app/core/services/students.service';
 import { DialogStudentComponent } from './components/dialog-student/dialog-student.component';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import Swal from 'sweetalert2';
+import { UsersService } from 'src/app/core/services/users.service';
 
 @Component({
   selector: 'app-students',
   templateUrl: './students.component.html',
   styleUrls: ['./students.component.scss'],
 })
-export class StudentsComponent implements OnInit {
+export class StudentsComponent {
+  isAdmin$: Observable<boolean> = this.usersService.isAdministrator();
   students$: Observable<Student[]>;
 
-  constructor(private db: StudentsService, public dialog: MatDialog) {
-    this.students$ = this.db.getStudents();
-  }
-
-  ngOnInit(): void {
-    this.db.loadStudents();
+  constructor(private db: StudentsService, private usersService: UsersService, public dialog: MatDialog) {
+    this.students$ = this.db.getStudents$();
   }
 
   openDialog() {
@@ -28,6 +27,9 @@ export class StudentsComponent implements OnInit {
       firstName: '',
       lastName: '',
       age: '',
+      email: '',
+      address: '',
+      phone: '',
       status: false,
     };
     const dialogRef = this.dialog.open(DialogStudentComponent, {
@@ -42,10 +44,8 @@ export class StudentsComponent implements OnInit {
   }
 
   openDialogEdit(id: number) {
-    console.log(id);
     
     this.db.getStudent(id).subscribe((student: Student) => {
-      console.log('student', student);
       
       const dialogRef = this.dialog.open(DialogStudentComponent, {
         width: '500px',
@@ -69,21 +69,36 @@ export class StudentsComponent implements OnInit {
         this.students$ = this.students$.pipe(
           map((students) => [...students, { ...data }])
         );
+        Swal.fire({
+          title: 'Estudiante creado',
+          icon: 'success',
+          confirmButtonText: 'Aceptar',
+        }).then();
       },
     });
   }
 
   updateStudent(id: number, student: Student) {
-    console.log('student', student);
     
     this.db.updateStudent(id, student).subscribe({
       next: (data) => {
         this.students$ = this.students$.pipe(
           map((students) => students.map((s) => (s.id === id ? student : s)))
         );
+        Swal.fire({
+          title: 'Estudiante actualizado',
+          icon: 'success',
+          confirmButtonText: 'Aceptar',
+        }).then();
       },
       error: (error) => {
         console.log(error);
+        Swal.fire({
+          title: 'Error',
+          text: 'Ocurrio un error al actualizar',
+          icon: 'error',
+          confirmButtonText: 'Aceptar',
+        }).then();
       },
     });
   }

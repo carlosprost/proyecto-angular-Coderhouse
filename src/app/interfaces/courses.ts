@@ -3,6 +3,6 @@ export interface Course {
     name: string;
     date?: string;
     hour?: string;
-    teacher_id?: number;
+    teachersId?: number;
 }
 

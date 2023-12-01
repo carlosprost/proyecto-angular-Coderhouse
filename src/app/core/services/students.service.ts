@@ -10,24 +10,12 @@ export class StudentsService {
   URL: string = 'http://localhost:3000/students';
   constructor(private http: HttpClient) {}
 
-  private students$ = new BehaviorSubject<Student[]>([]);
-
-  private studentesObservarble$ = this.students$.asObservable();
-
-  loadStudents() {
-    this.http.get<Student[]>(this.URL).subscribe({
-      next: (data: Student[]) => {
-        this.students$.next(data);
-      },
-    });
-  }
-
-  getStudents(): Observable<Student[]> {
-    return this.studentesObservarble$;
+  getStudents$(): Observable<Student[]> {
+    return this.http.get<Student[]>(this.URL);
   }
 
   getStudent(id: number) {
-    return this.http.get<Student>(`${this.URL}/${id}`);
+    return this.http.get<Student>(`${this.URL}/${id}`)
   }
 
   createStudent(student: Student) {
@@ -42,10 +30,4 @@ export class StudentsService {
     return this.http.put(`${this.URL}/${id}`, student);
   }
 
-  countStudents$() {
-    this.loadStudents();
-    return this.studentesObservarble$.pipe(
-      map((students) => students.length)
-    )
-  }
 }

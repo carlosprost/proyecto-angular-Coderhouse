@@ -8,6 +8,8 @@ import { Student } from 'src/app/interfaces/students';
 import { CoursesService } from 'src/app/core/services/courses.service';
 import { StudentEnrollmentsService } from 'src/app/core/services/student-enrollments.service';
 import { StudentsService } from 'src/app/core/services/students.service';
+import Swal from 'sweetalert2';
+import { UsersService } from 'src/app/core/services/users.service';
 
 @Component({
   selector: 'app-student-detail',
@@ -15,95 +17,115 @@ import { StudentsService } from 'src/app/core/services/students.service';
   styleUrls: ['./student-detail.component.scss'],
 })
 export class StudentDetailComponent {
-  idStudent: number;
-  student$: Observable<Student> = this.studentsService.getStudent(
-    this.activatedRoute.snapshot.params['id']
-  );
+  idStudent: number = parseInt(this.activatedRoute.snapshot.params['id']);
+  student$: Observable<Student[]> = this.studentsService
+    .getStudent(this.idStudent)
+    .pipe(map((student) => [student] as Student[]));
   courses$: Observable<Course[]> = this.courseServices.getCourses$();
 
-  studentSource$: Observable<Student[]> = this.student$.pipe(
-    map((student) => [student] as Student[])
-  );
-
   enroll$: Observable<StudentEnrollments[]> =
-    this.sEnroll.getStudentEnrollments$();
+    this.sEnroll.getStudentEnrollment$(this.idStudent);
 
   studentEnrollment: FormGroup;
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private usersService: UsersService,
     private studentsService: StudentsService,
     private courseServices: CoursesService,
     private sEnroll: StudentEnrollmentsService,
     private fb: FormBuilder
   ) {
-    this.idStudent = parseInt(this.activatedRoute.snapshot.params['id']);
-
-    this.sEnroll.loadStudentEnrollments$(this.idStudent);
-
     this.studentEnrollment = this.fb.group({
-      student_id: [this.idStudent, [Validators.required]],
-      course_id: ['', [Validators.required]],
+      studentsId: [this.idStudent, [Validators.required]],
+      coursesId: ['', [Validators.required]],
     });
   }
 
   onSubmit() {
     let enrollment = {
-      student_id: this.studentEnrollment.value.student_id,
-      course_id: this.studentEnrollment.value.course_id.id,
-      course_name: this.studentEnrollment.value.course_id.name,
-      date: this.studentEnrollment.value.course_id.date,
-      hour: this.studentEnrollment.value.course_id.hour,
+      studentsId: this.studentEnrollment.value.studentsId,
+      coursesId: this.studentEnrollment.value.coursesId,
     };
 
     this.createStudentEnrollment(enrollment);
   }
 
   createStudentEnrollment(studentEnrollment: StudentEnrollments) {
+    let curso = '';
+    this.courses$
+      .pipe(
+        map((courses) => {
+          return courses.filter((course) => {
+            if (course.id === studentEnrollment.coursesId) {
+              curso = course.name;
+            }
+          });
+        })
+      )
+      .subscribe();
+
     this.enroll$
       .pipe(
         map((enrollment) =>
           enrollment.filter((enroll) =>
-            this.existeCurso(enroll, studentEnrollment)
+            this.existeCurso(enroll, studentEnrollment, curso)
           )
         )
       )
       .subscribe((data) => {
         if (data.length === 0) {
           this.crearYSumarEnrollment(studentEnrollment);
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'El estudiante ya se encuentra inscripto en este curso',
+            showConfirmButton: true,
+          }).then();
         }
       });
   }
 
   crearYSumarEnrollment(studentEnrollment: StudentEnrollments) {
-    this.sEnroll
-      .createStudentEnrollment$(studentEnrollment)
-      .subscribe({
-        next: (data) => {
-          this.enroll$ = this.enroll$.pipe(
-            map((enroll) => enroll.concat(studentEnrollment))
-          );
-        },
-      });
+    this.sEnroll.createStudentEnrollment$(studentEnrollment).subscribe({
+      next: (data: StudentEnrollments) => {
+        this.enroll$ = this.sEnroll.getStudentEnrollment$(this.idStudent);
+        Swal.fire({
+          icon: 'success',
+          title: 'Estudiante inscripto',
+          showConfirmButton: false,
+          timer: 1500,
+        }).then();
+      },
+    });
   }
 
-  existeCurso(inscripto: StudentEnrollments, aInscribir: StudentEnrollments) {
+  existeCurso(
+    inscripto: StudentEnrollments,
+    aInscribir: StudentEnrollments,
+    courseName: String
+  ) {
+    console.log('curso: ', courseName);
+
     return (
-      inscripto.course_id === aInscribir.course_id ||
-      inscripto.course_name === aInscribir.course_name
+      inscripto.coursesId === aInscribir.coursesId ||
+      inscripto.courses?.name === courseName
     );
   }
 
   deleteCourse(id: number) {
-    console.log(id);
-
     this.sEnroll.deleteStudentEnrollment$(id).subscribe({
       next: (data) => {
-        console.log(data);
-
         this.enroll$ = this.enroll$.pipe(
           map((enroll) => enroll.filter((enroll) => enroll.id !== id))
         );
+        Swal.fire({
+          icon: 'success',
+          title: 'Curso eliminado',
+          showConfirmButton: false,
+          timer: 1500,
+        }).then();
       },
     });
   }

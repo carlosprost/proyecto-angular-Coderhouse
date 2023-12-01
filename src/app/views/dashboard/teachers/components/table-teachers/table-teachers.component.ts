@@ -10,6 +10,7 @@ import { Teacher } from 'src/app/interfaces/teachers';
 export class TableTeachersComponent {
   
   @Input() data!: Teacher[];
+  @Input() isAdmin!: boolean;
 
   columns: string[] = ['firstName', 'lastName', 'actions'];
 

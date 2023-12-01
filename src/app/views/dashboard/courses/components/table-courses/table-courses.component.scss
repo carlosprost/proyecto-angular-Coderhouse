@@ -1,0 +1,24 @@
+.tableCourseStyle{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
+    table{
+        width: 100%;
+        height: 100%;
+        th{
+            width: 300px;
+            padding: 5px;
+            text-align: center;
+        }
+
+        td{
+            width: 300px;
+            padding: 5px;
+            text-align: center;
+        }
+    }
+}

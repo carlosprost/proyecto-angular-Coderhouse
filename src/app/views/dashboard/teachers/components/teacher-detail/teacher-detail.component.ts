@@ -31,7 +31,7 @@ export class TeacherDetailComponent {
         map((courses) =>
           courses.filter(
             (course) =>
-              !!course.teacher_id && course.teacher_id == this.idTeacher
+              !!course.teachersId && course.teachersId == this.idTeacher
           )
         )
       );

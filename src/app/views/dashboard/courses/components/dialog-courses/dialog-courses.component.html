@@ -33,7 +33,6 @@
       <mat-select formControlName="teacher">
         <mat-option *ngFor="let teacher of (teachers$ | async) || []" [value]="teacher.id">{{teacher.firstName + ' ' + teacher.lastName }}</mat-option>
       </mat-select>
-      <mat-hint>Seleccione el estado del alumno</mat-hint>
       <mat-error *ngIf="formCourse.controls['teacher'].hasError('required')">
         Este campo es <strong>requerido</strong>
       </mat-error>

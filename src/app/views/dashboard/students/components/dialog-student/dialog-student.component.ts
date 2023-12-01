@@ -19,8 +19,6 @@ export class DialogStudentComponent {
     public dialogRef: MatDialogRef<DialogStudentComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DataDialog,
     ) {
-      console.log('data', data);
-      
     this.createFormStudent(data.data)
    }
 
@@ -29,13 +27,15 @@ export class DialogStudentComponent {
    }
 
    createFormStudent(student: Student){
-    console.log('student', student);
     
     if(student){
       this.formStudent = this.fb.group({
         firstName: [student.firstName, [Validators.required]],
         lastName: [student.lastName, [Validators.required]],
         age: [student.age, [Validators.required]],
+        email: [student.email, [Validators.required, Validators.email]],
+        address: [student.address, [Validators.required]],
+        phone: [student.phone, [Validators.required]],
         status: [student.status, [Validators.required]]
       })
     }else{
@@ -43,6 +43,9 @@ export class DialogStudentComponent {
         firstName: ['', [Validators.required]],
         lastName: ['', [Validators.required]],
         age: ['', [Validators.required]],
+        email: ['', [Validators.required, Validators.email]],
+        address: ['', [Validators.required]],
+        phone: ['', [Validators.required]],
         status: ['', [Validators.required]]
       })
     }
@@ -54,6 +57,9 @@ export class DialogStudentComponent {
       firstName: this.formStudent.value.firstName,
       lastName: this.formStudent.value.lastName,
       age: this.formStudent.value.age,
+      email: this.formStudent.value.email,
+      address: this.formStudent.value.address,
+      phone: this.formStudent.value.phone,
       status: this.formStudent.value.status
     }
     

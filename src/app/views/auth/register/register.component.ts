@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { User } from 'src/app/interfaces/users';
 import { UsersService } from 'src/app/core/services/users.service';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
@@ -22,6 +21,7 @@ export class RegisterComponent {
       name: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
+      role: ['EMPLOYEE'],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
     });
@@ -40,17 +40,16 @@ export class RegisterComponent {
       let user: User = {
         name: `${this.formRegister.value.name} ${this.formRegister.value.lastName}`,
         email: this.formRegister.value.email,
+        role: this.formRegister.value.role,
         password: this.formRegister.value.password,
       };
 
-      this.usersService.createUser(user).subscribe({
+      this.usersService.createUser$(user).subscribe({
         next: (res) => {
-          Swal.fire('Success', 'User registered successfully', 'success');
           this.router.navigate(['/login']);
         },
         error: (err) => {
           console.log(err);
-          Swal.fire('Error', 'Error registering user', 'error');
         },
       });
     }

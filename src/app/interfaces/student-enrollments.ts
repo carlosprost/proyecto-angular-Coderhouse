@@ -1,9 +1,11 @@
+import { Course } from "./courses";
+import { Student } from "./students";
+
 export interface StudentEnrollments {
     id?: number;
-    student_id: number;
-    course_id: number;
-    course_name?: string;
-    date?: string;
-    hour?: string;
+    studentsId: number;
+    coursesId: number;
+    students?: Student;
+    courses?: Course
 }
 

@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { DashboardComponent } from "./dashboard.component";
+import { usersGuard } from "src/app/core/guards/users.guard";
 
 const routes = [
     {
@@ -22,6 +23,11 @@ const routes = [
             {
                 path: 'courses',
                 loadChildren: () => import('./courses/courses.module').then(m => m.CoursesModule)
+            },
+            {
+                path: 'users',
+                canActivate: [usersGuard],
+                loadChildren: () => import('./users/users.module').then(m => m.UsersModule)
             },
             {
                 path: '**',

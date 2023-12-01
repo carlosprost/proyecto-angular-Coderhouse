@@ -8,28 +8,20 @@ import { BehaviorSubject, map, of } from 'rxjs';
 })
 export class StudentEnrollmentsService {
   URL = 'http://localhost:3000/studentEnrollments';
-  URLCourse = 'http://localhost:3000/courses';
   constructor(private http: HttpClient) {}
 
-  private studentEnroll = new BehaviorSubject<StudentEnrollments[]>([]);
-  private studentEnrollObservable$ = this.studentEnroll.asObservable();
 
-  getStudentEnrollments$() {
-    return this.studentEnrollObservable$;
-  }
-  loadStudentEnrollments$(idStudent: number) {
-    this.http
-      .get<StudentEnrollments[]>(this.URL)
-      .pipe(
-        map((resp) => resp.filter((enroll) => enroll.student_id === idStudent))
-      )
-      .subscribe((data: StudentEnrollments[]) => {
-        this.studentEnroll.next(data);
-      });
+  getStudentEnrollment$(idStudent: number) {
+    return this.http
+    .get<StudentEnrollments[]>(`${this.URL}?_expand=courses&_expand=students`)
+    .pipe(
+      map((resp) => resp.filter((enroll) => enroll.studentsId === idStudent))
+    )
   }
 
   createStudentEnrollment$(studentEnrollment: StudentEnrollments) {
-    return this.http.post(this.URL, studentEnrollment);
+    
+    return this.http.post<StudentEnrollments>(this.URL, studentEnrollment);
   }
 
   updateStudentEnrollment$(studentEnrollment: StudentEnrollments) {

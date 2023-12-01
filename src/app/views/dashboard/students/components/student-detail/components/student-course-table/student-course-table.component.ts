@@ -10,7 +10,7 @@ import { StudentEnrollments } from 'src/app/interfaces/student-enrollments';
 export class StudentCourseTableComponent {
   @Input() studentCourses!: StudentEnrollments[]
   @Output() deleteCourse: EventEmitter<number> = new EventEmitter();
-  columns: string[] = ['course_id', 'date', 'hour', 'actions'];
+  columns: string[] = ['coursesId', 'date', 'hour', 'actions'];
 
   constructor() {}
 

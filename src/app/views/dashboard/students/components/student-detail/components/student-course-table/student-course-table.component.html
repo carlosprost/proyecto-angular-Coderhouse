@@ -1,22 +1,22 @@
 <section class="tableCourseDetail">
     <table mat-table  [dataSource]="studentCourses" class="mat-elevation-z8">
-       <ng-container matColumnDef="{{'course_id'}}">
+       <ng-container matColumnDef="{{'coursesId'}}">
         <th mat-header-cell *matHeaderCellDef>{{'Curso'}}</th>
         <td mat-cell *matCellDef="let element">
-          {{ element.course_name }}
+          {{ element.courses.name }}
         </td>
       </ng-container>
       
       <ng-container matColumnDef="{{'date'}}">
         <th mat-header-cell *matHeaderCellDef>{{'Fecha'}}</th>
         <td mat-cell *matCellDef="let element">
-          {{ element.date }}
+          {{ element.courses.date }}
         </td>
       </ng-container>
       <ng-container matColumnDef="{{'hour'}}">
         <th mat-header-cell *matHeaderCellDef>{{'Horario'}}</th>
         <td mat-cell *matCellDef="let element">
-          {{ element.hour }}
+          {{ element.courses.hour }}
         </td>
       </ng-container>
 

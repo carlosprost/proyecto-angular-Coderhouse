@@ -1,84 +1,93 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { CoursesService } from 'src/app/core/services/courses.service';
+import { Observable, map } from 'rxjs';
+import { Student } from 'src/app/interfaces/students';
+import { Teacher } from 'src/app/interfaces/teachers';
+import { Course } from 'src/app/interfaces/courses';
+import { HomeService } from 'src/app/core/services/home.service';
 import { StudentsService } from 'src/app/core/services/students.service';
-import { TeachersService } from 'src/app/core/services/teachers.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-  
-  nroStudents: number = 0;
-  nroTeachers: number = 0;
-  nroCourses: number = 0;
+  students: Observable<Student[]>;
+  teachers: Observable<Teacher[]>;
+  courses: Observable<Course[]>;
 
-  studentData = [
-    {
-      label: 'Students',
-      data: [this.nroStudents]
+  nroStudents!: Observable<number[]>;
+  nroTeachers!: Observable<number[]>;
+  nroCourses!: Observable<number[]>;
+
+  studentsActives!: Observable<number[]>;
+  teachersAssigned!: Observable<number[]>;
+  coursesNotAssigned!: Observable<number[]>;
+
+  constructor(private router: Router, private homeService: HomeService) {
+    this.students = this.homeService.getCountStudent();
+    this.teachers = this.homeService.getCountTeacher();
+    this.courses = this.homeService.getCountCourses();
+
+    this.setNumbersElements()
+    this.numberStudentsActives()
+    this.numberTeachersAssigned()
+    this.numberCoursesNotAssigned()
+    
+  }
+
+  setNumbersElements(){
+    this.nroStudents = this.students.pipe(
+      map((students: Student[]) => [students.length])
+    );
+    this.nroTeachers = this.teachers.pipe(
+      map((teachers: Teacher[]) => [teachers.length])
+    );
+    this.nroCourses = this.courses.pipe(
+      map((courses: Course[]) => [courses.length])
+    );
+  }
+
+  numberStudentsActives(){
+    this.studentsActives = this.students.pipe(
+      map((students: Student[]) => [
+        students.filter((student) => student.status === true).length,
+      ])
+    );
+  }
+
+  numberTeachersAssigned(){
+    let teachers: number[] = [];
+    this.teachersAssigned = this.courses.pipe(
+      
+      map((courses: Course[]) => [
+        courses.filter((course) => this.isTeacherNotRepeated(course.teachersId, teachers)).length
+      ])
+    );
+  }
+
+  isTeacherNotRepeated(id: number | undefined, teachers: number[]) {
+    let result: Set<number> = new Set();
+    
+    if(id !== undefined) {
+      if(teachers.includes(id)) return false
+      teachers.push(id)
+      result = new Set(teachers)
     }
-  ]
 
-  teacherData = [
-    {
-      label: 'Teachers',
-      data: [this.nroTeachers]
-    }
-  ]
-
-  courseData = [
-    {
-      label: 'Courses',
-      data: [this.nroCourses]
-    }
-  ]
-
-  studentLabels = ['Students'];
-
-  teacherLabels = ['Teachers'];
-
-  courseLabels = ['Courses'];
-
-  studentOptions = {
-    responsive: true,
+    return teachers.length === result.size;
   }
 
-  teacherOptions = {
-    responsive: true,
+  numberCoursesNotAssigned(){
+    this.coursesNotAssigned = this.courses.pipe(
+      map((courses: Course[]) => [
+        courses.filter((course) => course.teachersId === undefined).length,
+      ])
+    );
   }
 
-  courseOptions = {
-    responsive: true,
+  goTo(navigate: string) {
+    this.router.navigate([`/dashboard/${navigate}`]);
   }
-
-  constructor(
-    private router: Router,
-    private studentsService: StudentsService,
-    private teachersService: TeachersService,
-    private coursesServices: CoursesService,
-  ) {
-    this.studentsService.countStudents$().subscribe({
-      next: (nro) => {
-        this.nroStudents = nro;
-      }
-    })
-
-    this.teachersService.countTeachers$().subscribe({
-      next: (nro) => {
-        this.nroTeachers = nro;
-      }
-    })
-
-    this.coursesServices.countCourses$().subscribe({
-      next: (nro) => {
-        this.nroCourses = nro;
-      }
-    })
-  }
-
-
-
 }

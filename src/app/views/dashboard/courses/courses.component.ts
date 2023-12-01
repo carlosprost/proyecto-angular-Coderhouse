@@ -5,7 +5,10 @@ import { DialogCoursesComponent } from './components/dialog-courses/dialog-cours
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, map } from 'rxjs';
 import { Teacher } from 'src/app/interfaces/teachers';
-import { TeachersService } from 'src/app/core/services/teachers.service';
+import { Store } from '@ngrx/store';
+import { selectCourses, selectIsAdmin, selectTeachers } from './store/courses.selectors';
+import { CoursesActions } from './store/courses.actions';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-courses',
@@ -13,30 +16,22 @@ import { TeachersService } from 'src/app/core/services/teachers.service';
   styleUrls: ['./courses.component.scss'],
 })
 export class CoursesComponent {
+  isAdmin$: Observable<boolean>
   courses$: Observable<Course[]>;
   teachers$: Observable<Teacher[]>;
-  constructor(
-    private coursesServices: CoursesService,
-    private teacherService: TeachersService,
-    public dialog: MatDialog
-  ) {
-    this.courses$ = this.coursesServices.getCourses$();
-    this.teachers$ = this.teacherService.getTeachers$();
+  constructor(private store: Store, public dialog: MatDialog) {
+    this.store.dispatch(CoursesActions.loadCourses());
+    this.isAdmin$ = this.store.select(selectIsAdmin)
+    this.courses$ = this.store.select(selectCourses);
+    this.teachers$ = this.store.select(selectTeachers);
   }
 
   openDialog() {
-    const course: Course = {
-      id: 0,
-      name: '',
-      date: '',
-      hour: '',
-      teacher_id: 0,
-    };
     const dialogRef = this.dialog.open(DialogCoursesComponent, {
       width: '500px',
       data: {
         message: 'Crear Curso',
-        data: { course: course, teacher: this.teachers$ },
+        data: null,
         isUpdate: false,
       },
     });
@@ -48,52 +43,49 @@ export class CoursesComponent {
   }
 
   openDialogEdit(id: number) {
-    this.coursesServices.getCourse$(id).subscribe((Course: Course) => {
-      const dialogRef = this.dialog.open(DialogCoursesComponent, {
-        width: '500px',
-        data: {
-          message: 'Editar curso',
-          data: { course: Course, teacher: this.teachers$ },
-          isUpdate: true,
-        },
-      });
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result) {
-          this.updateCourse(id, result.data);
-        }
-      });
+    const dialogRef = this.dialog.open(DialogCoursesComponent, {
+      width: '500px',
+      data: {
+        message: 'Editar curso',
+        data: id,
+        isUpdate: true,
+      },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.updateCourse(id, result.data);
+      }
     });
   }
 
   createCourse(course: Course) {
-    this.coursesServices.createCourse(course).subscribe({
-      next: (data: any) => {
-        this.courses$ = this.courses$.pipe(
-          map((courses) => [...courses, { ...data }])
-        );
-      },
-    });
+    this.store.dispatch(CoursesActions.createCourse({ payload: course }));
+    Swal.fire({
+      icon: 'success',
+      title: 'Curso creado',
+      showConfirmButton: false,
+      timer: 1500,
+    }).then()
   }
 
   updateCourse(id: number, course: Course) {
-    this.coursesServices.updateCourse(id, course).subscribe({
-      next: (data: Course) => {
-        this.courses$ = this.courses$.pipe(
-          map((courses) => courses.map((s) => (s.id === id ? data : s)))
-        );
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
+    this.store.dispatch(CoursesActions.updateCourse({ id, payload: course }));
+    Swal.fire({
+      icon: 'success',
+      title: 'Curso actualizado',
+      showConfirmButton: false,
+      timer: 1500,
+    }).then()
   }
 
   deleteCourse(id: number) {
-    this.coursesServices.deleteCourse(id).subscribe(() => {
-      this.courses$ = this.courses$.pipe(
-        map((courses) => courses.filter((s) => s.id !== id))
-      );
-    });
+    this.store.dispatch(CoursesActions.deleteCourse({ id }));
+    Swal.fire({
+      icon: 'success',
+      title: 'Curso eliminado',
+      showConfirmButton: false,
+      timer: 1500,
+    }).then()
   }
 
   searchCourse(dato: any) {

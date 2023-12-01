@@ -2,78 +2,88 @@
   <h2>Area de estadísticas</h2>
   <section class="cards">
     <section class="cards-row">
-      <mat-card class="card">
-        <mat-card-header>
-          <mat-card-title>Estudiantes</mat-card-title>
-        </mat-card-header>
-        <canvas baseChart
-          [type]="'bar'"
-          [legend]="true"
-          [datasets]="studentData"
-          [labels]="studentLabels"
-          [options]="studentOptions"
-        ></canvas>
-        <mat-card-content>
-          <p>
-             {{nroStudents}}
-          </p>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-button>LIKE</button>
-          <button mat-button>SHARE</button>
-        </mat-card-actions>
-      </mat-card>
-
-      <mat-card class="card">
-        <mat-card-header>
-          <mat-card-title>Profesores</mat-card-title>
-        </mat-card-header>
-        <canvas
-          baseChart
-          [type]="'bar'"
-          [legend]="true"
-          [datasets]="teacherData"
-          [labels]="teacherLabels"
-          [options]="teacherOptions"
-        ></canvas>
-        <mat-card-content>
-          <p>
-             {{nroTeachers}}
-          </p>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-button>LIKE</button>
-          <button mat-button>SHARE</button>
-        </mat-card-actions>
-      </mat-card>
+      <section class="card">
+        <app-card
+          [labels]="['Estudiantes']"
+          [label]="'Estudiantes registrados'"
+          [nro]="(nroStudents | async) || []"
+          [backgroundColor]="'#42A5F5'"
+          [hoverColor]="'#1E9832'"
+        ></app-card>
+      </section>
+      <section class="card">
+        <app-card
+          [labels]="['Estudiantes']"
+          [label]="'Estudiantes Activos'"
+          [nro]="(studentsActives | async) || []"
+          [backgroundColor]="'#1E9832'"
+          [hoverColor]="'#374635'"
+        ></app-card>
+      </section>
+    </section>
+    <!-- Botón de Students -->
+    <section class="btn-home">
+      <button mat-raised-button color="primary" (click)="goTo('students')">Ir</button>
     </section>
 
+    <mat-divider></mat-divider>
 
     <section class="cards-row">
-        <mat-card class="card">
-          <mat-card-header>
-            <mat-card-title>Cursos</mat-card-title>
-          </mat-card-header>
-          <canvas
-            baseChart
-            [type]="'bar'"
-            [legend]="true"
-            [datasets]="courseData"
-            [labels]="courseLabels"
-            [options]="courseOptions"
-          ></canvas>
-          <mat-card-content>
-            <p>
-               {{nroCourses}}
-            </p>
-          </mat-card-content>
-          <mat-card-actions>
-            <button mat-button>LIKE</button>
-            <button mat-button>SHARE</button>
-          </mat-card-actions>
-        </mat-card>
+      <section class="card">
+        <app-card
+          [labels]="['Profesores']"
+          [label]="'Profesores'"
+          [nro]="(nroTeachers | async) || []"
+          [backgroundColor]="'#42A5F5'"
+          [hoverColor]="'#1E9832'"
+        ></app-card>
       </section>
+      <section class="card">
+        <app-card
+          [labels]="['Profesores']"
+          [label]="'Profesores Asignados'"
+          [nro]="(teachersAssigned | async) || []"
+          [backgroundColor]="'#1E9832'"
+          [hoverColor]="'#374635'"
+        ></app-card>
+      </section>
+    </section>
 
-      
+    <!-- Botón de Teachers -->
+    <section class="btn-home">
+      <button mat-raised-button color="primary" (click)="goTo('teachers')">Ir</button>
+    </section>
+
+    <mat-divider></mat-divider>
+
+    <section class="cards-row">
+      <section class="card">
+        <app-card
+          [labels]="['Cursos']"
+          [label]="'Cursos'"
+          [nro]="(nroCourses | async) || []"
+          [backgroundColor]="'#42A5F5'"
+          [hoverColor]="'#1E9832'"
+        ></app-card>
+      </section>
+      <section class="card">
+        <app-card
+          [labels]="['Cursos']"
+          [label]="'Cursos no asignados'"
+          [nro]="(coursesNotAssigned | async) || []"
+          [backgroundColor]="'#DF3434'"
+          [hoverColor]="'#F16B6B'"
+        ></app-card>
+      </section>
+    </section>
+
+    <!-- Botón de Courses -->
+    <section class="btn-home">
+      <button mat-raised-button color="primary" (click)="goTo('courses')">Ir</button>
+    </section>
+
+    <mat-divider></mat-divider>
+
+
   </section>
 </section>

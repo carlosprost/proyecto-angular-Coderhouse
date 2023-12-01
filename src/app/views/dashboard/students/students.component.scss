@@ -6,7 +6,7 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
 
   .buttonActions{
@@ -16,7 +16,7 @@
   }
 
   .tableStudent {
-    width: 100%;
+    width: 90%;
     height: 100%;
 
     .searchStudents{

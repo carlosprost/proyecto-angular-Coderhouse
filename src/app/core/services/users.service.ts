@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User, UserActive } from '../../interfaces/users';
-import { BehaviorSubject, map } from 'rxjs';
+import { BehaviorSubject, map, of } from 'rxjs';
 import { Session } from '../../interfaces/session';
 import { Store } from '@ngrx/store';
 import { LoginActions } from 'src/app/store/login/login.actions';
@@ -18,7 +18,7 @@ export class UsersService {
 
   user$ = this.store.select(selectUserActive)
 
-  getUsers() {
+  getUsers$() {
     return this.http.get<User[]>(this.URL);
   }
 
@@ -59,7 +59,7 @@ export class UsersService {
         next: (user: User[]) => {
           this.handleAuthUser(user[0]);
           this.newSession({
-            user_id: user[0].id,
+            usersId: user[0].id,
             createSession: new Date(),
           }).subscribe();
         },
@@ -74,6 +74,7 @@ export class UsersService {
     const userActive: UserActive = {
       name: user.name,
       email: user.email,
+      role: user.role,
     }
 
     this.store.dispatch(LoginActions.login({ user: userActive }));
@@ -85,16 +86,16 @@ export class UsersService {
     return this.http.post(`${this.URLSession}`, session);
   }
 
-  createUser(user: User) {
-    return this.http.post(this.URL, user);
+  createUser$(user: User) {
+    return this.http.post<User[]>(this.URL, user);
   }
 
   deleteUser(id: number) {
-    return this.http.delete(`${this.URL}/${id}`);
+    return this.http.delete<User[]>(`${this.URL}/${id}`);
   }
 
   updateUser(id: number, user: User) {
-    return this.http.put(`${this.URL}/${id}`, user);
+    return this.http.put<User[]>(`${this.URL}/${id}`, user);
   }
 
   storeSession(user: User) {
@@ -103,9 +104,15 @@ export class UsersService {
       JSON.stringify({
         name: user.name,
         email: user.email,
+        role: user.role,
       })
     );
     
+  }
+
+  isAdministrator() {
+    const userActive = JSON.parse(sessionStorage.getItem('userActive') ?? '{}');
+    return of(userActive.role === 'ADMIN');
   }
 
   logOut(){

@@ -1,6 +1,8 @@
 <h2 mat-dialog-title>{{ data.message }}</h2>
 <div mat-dialog-content class="formStyle">
   <form class="formulario" [formGroup]="formStudent">
+
+    <!-- Campo Nombre -->
     <mat-form-field>
       <mat-label>Nombre</mat-label>
       <input matInput formControlName="firstName" />
@@ -10,6 +12,7 @@
       </mat-error>
     </mat-form-field>
 
+    <!-- Campo Apellido -->
     <mat-form-field>
       <mat-label>Apellido</mat-label>
       <input matInput formControlName="lastName" />
@@ -19,6 +22,7 @@
       </mat-error>
     </mat-form-field>
 
+    <!-- Campo Edad -->
     <mat-form-field>
       <mat-label>Edad</mat-label>
       <input matInput formControlName="age" />
@@ -28,6 +32,37 @@
       </mat-error>
     </mat-form-field>
 
+    <!-- Campo Email -->
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" />
+      <mat-error *ngIf="formStudent.controls['email'].hasError('required')">
+        Este campo es <strong>requerido</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Campo Dirección -->
+    <mat-form-field>
+      <mat-label>Dirección</mat-label>
+      <input matInput formControlName="address" />
+      <mat-hint>Escriba la dirección del alumno</mat-hint>
+      <mat-error *ngIf="formStudent.controls['address'].hasError('required')">
+        Este campo es <strong>requerido</strong>
+      </mat-error>
+    </mat-form-field>
+
+      <!-- Campo Teléfono -->
+      <mat-form-field>
+        <mat-label>Teléfono</mat-label>
+        <input matInput formControlName="phone" />
+        <mat-hint>Escriba el teléfono del alumno</mat-hint>
+        <mat-error *ngIf="formStudent.controls['phone'].hasError('required')">
+          Este campo es <strong>requerido</strong>
+        </mat-error>
+      </mat-form-field>
+
+
+    <!-- Campo Estado -->
     <mat-form-field>
       <mat-label>Estado</mat-label>
       <mat-select formControlName="status">

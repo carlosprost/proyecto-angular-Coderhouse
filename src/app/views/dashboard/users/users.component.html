@@ -1,0 +1,16 @@
+<section class="users">
+    <section class="tableUsers">
+        <section class="searchUsers">
+            <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Buscar Usuario</mat-label>
+                <input matInput (keyup)="searchUsers($event)">
+            </mat-form-field>
+        </section>
+        <section class="buttonActions">
+            <button mat-button color="primary" (click)="openDialog()">Nuevo Usuario</button>
+        </section>
+        <app-user-table [dataSource]="(users$ |async) || []" (deleteElement)="deleteUser($event)"
+        (editElement)="openDialogEdit($event)"></app-user-table>
+    </section>
+    
+</section>

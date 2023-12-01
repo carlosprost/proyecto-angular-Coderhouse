@@ -20,10 +20,10 @@
           <button mat-icon-button color="accent" (click)="teacherDetail(element.id)">
             <mat-icon aria-hidden="false" aria-label="visibility" fontIcon="visibility"></mat-icon>
           </button>
-          <button mat-icon-button color="primary" aria-label="Edit" (click)="editElement.emit(element.id)">
+          <button mat-icon-button color="primary" aria-label="Edit" (click)="editElement.emit(element.id)" *ngIf="isAdmin">
             <mat-icon aria-hidden="false" aria-label="edit" fontIcon="edit"></mat-icon>
           </button>
-          <button mat-icon-button color="warn" aria-label="Delete" (click)="deleteElement.emit(element.id)">
+          <button mat-icon-button color="warn" aria-label="Delete" (click)="deleteElement.emit(element.id)" *ngIf="isAdmin">
             <mat-icon aria-hidden="false" aria-label="delete" fontIcon="delete"></mat-icon>
           </button>
         </td>

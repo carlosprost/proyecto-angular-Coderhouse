@@ -4,6 +4,7 @@ import { Observable, map } from 'rxjs';
 import { TeachersService } from 'src/app/core/services/teachers.service';
 import { Teacher } from 'src/app/interfaces/teachers';
 import { DialogTeachersComponent } from './components/dialog-teachers/dialog-teachers.component';
+import { UsersService } from 'src/app/core/services/users.service';
 
 @Component({
   selector: 'app-teachers',
@@ -12,9 +13,11 @@ import { DialogTeachersComponent } from './components/dialog-teachers/dialog-tea
 })
 export class TeachersComponent {
 
+  isAdmin$: Observable<boolean> = this.usersService.isAdministrator();
+
   teachers$: Observable<Teacher[]>;
 
-  constructor(private teachersService: TeachersService, public dialog: MatDialog) {
+  constructor(private teachersService: TeachersService, private usersService: UsersService, public dialog: MatDialog) {
     this.teachers$ = this.teachersService.getTeachers$();
 
   }

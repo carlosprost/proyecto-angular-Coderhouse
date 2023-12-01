@@ -8,7 +8,7 @@ import { Student } from 'src/app/interfaces/students';
 })
 export class StudentDetailTableComponent {
 
-  columns: string[] = ['firstName', 'lastName', 'age'];
+  columns: string[] = ['firstName', 'lastName', 'age', 'email', 'address', 'phone'];
   @Input() studentDetail!: Student[];
   
   constructor() { }
